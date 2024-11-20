@@ -307,107 +307,91 @@
 
 /* Gallery Section */
 .gallery-section {
-    padding: 60px 20px;
-    background-color: #f9f9f9; /* Light background color */
-    text-align: center;
+  padding: 60px 20px;
+  background-color: #f9f9f9; /* Light background color */
+  text-align: center;
 }
 
 /* Gallery Title */
 .gallery-section h2 {
     font-size: 2.5rem;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     color: #3a3a3a;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #800000, #ffd700); /* Maroon to gold gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Gradient text */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
 }
+
+
+.gallery-section p {
+  font-size: 1.2rem;
+  color: #333;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
 
 /* Gallery Grid Container */
 .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    gap: 20px;
-    justify-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    border: 5px solid #800000; /* Maroon border around the entire grid */
-    border-radius: 12px; /* Rounded corners for the grid border */
-    padding: 20px; /* Space between the grid and the border */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 20px;
+  justify-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  border: 5px solid #800000; /* Maroon border around the entire grid */
+  border-radius: 12px; /* Rounded corners for the grid border */
+  padding: 20px; /* Space between the grid and the border */
 }
 
 /* Gallery Item */
 .gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  border: 4px solid #ffd700; /* Gold border */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Gallery Item Image */
 .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    transition: opacity 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Hover effect for gallery items */
 .gallery-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .gallery-item:hover img {
-    opacity: 0.85;
+  opacity: 0.85;
 }
 
 /* Responsive Grid */
 @media screen and (max-width: 1200px) {
-    .gallery-grid {
-        grid-template-columns: repeat(3, 1fr); /* Keep 3 columns for medium screens */
-    }
+  .gallery-grid {
+      grid-template-columns: repeat(3, 1fr); /* Keep 3 columns for medium screens */
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
-    }
+  .gallery-grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .gallery-grid {
-        grid-template-columns: 1fr; /* 1 column for small screens */
-    }
+  .gallery-grid {
+      grid-template-columns: 1fr; /* 1 column for small screens */
+  } 
 }
-
-
-/* Gallery Item */
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Gallery Item Image */
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* 3D Hover Effect for Gallery Items */
-.gallery-item:hover {
-    transform: translateY(-10px); /* Slight lift on hover */
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Creates a shadow for depth */
-}
-
-.gallery-item:hover img {
-    opacity: 0.85; /* Slightly fade image on hover */
-    transform: scale(1.05); /* Slight zoom on hover */
-}
-
