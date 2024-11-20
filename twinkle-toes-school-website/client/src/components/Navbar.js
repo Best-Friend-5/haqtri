@@ -27,7 +27,7 @@ function Navbar() {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-logo">
         <img src={logo} alt="Twinkle Toes Logo" />
-        <p className="logo-text">Twinkle Toes School</p>
+        <p className="logo-text">Twinkle Toes Schools</p>
       </div>
 
       <ul className={`navbar-links ${isOpen ? 'open' : ''}`}>
