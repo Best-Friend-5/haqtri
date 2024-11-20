@@ -1,0 +1,413 @@
+/* Hero Banner */
+.hero-banner {
+    position: relative;
+    background: url('../images/banner.jpg') center/cover no-repeat;
+    height: 500px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-banner .overlay {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    text-align: center;
+    max-width: 800px;
+  }
+  
+  .hero-banner h1 {
+    font-size: 2.5rem;
+  }
+  
+  .cta-button {
+    background-color: #ffcc00; /* Gold color */
+    border: none;
+    padding: 10px 20px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .cta-button:hover {
+    background-color: #ff99e6; /* Lighter pink */
+  }
+
+/* Intro Section */
+.intro-section {
+    padding: 50px 20px;
+    background-color: #f9f9ff; /* Light lavender for calm background */
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .intro-content {
+    display: flex;
+    gap: 20px;
+    max-width: 900px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Title Box Styling */
+  .title-box {
+    background-color: #800000; /* Maroon */
+    color: #ffcc00; /* Gold text */
+    padding: 30px;
+    border-radius: 12px;
+    flex: 1 1 45%; /* Larger size */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .title-box h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .title-box blockquote {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #ffcc00;
+    margin: 0;
+    max-width: 80%;
+  }
+  
+  /* Intro Box Styling */
+  .intro-box {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 2px solid #ffcc00; /* Gold border */
+    border-radius: 8px;
+    flex: 1 1 45%; /* Smaller box */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    color: #333;
+  }
+  
+  .intro-box p {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  
+  /* Mission and Vision Styling */
+  .mission-vision {
+    display: flex;
+    flex-direction: row; /* Place boxes side by side */
+    gap: 30px;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 50px 20px;
+    text-align: left;
+    border-radius: 12px;
+  }
+  
+  .mission-box, .vision-box {
+    background: #800000; /* Maroon */
+    color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    width: 45%; /* Adjust width to allow side-by-side */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .mission-box:hover, .vision-box:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .mission-box h2, .vision-box h2 {
+    color: #ffcc00;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ffcc00; /* Gold underline */
+    padding-bottom: 8px;
+  }
+  
+  .mission-box p, .vision-box p {
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  /* Mission and Vision Paragraph Styling */
+  .mission-box p, .vision-box p {
+    color: #e0e0e0;
+    font-size: 1.2rem; /* Increased font size for better readability */
+    line-height: 1.8;
+  }
+  
+  /* Ensure card size remains fixed */
+  .mission-box, .vision-box {
+    background: #800000; /* Maroon */
+    color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+    width: 45%; /* Fixed width to keep the cards the same size */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  /* Responsive styling for smaller screens */
+  @media (max-width: 768px) {
+    .mission-vision {
+      flex-direction: column; /* Stack boxes on smaller screens */
+    }
+    .mission-box, .vision-box {
+      width: 100%; /* Full width on small screens */
+    }
+  }
+
+  /* Core Values Section */
+.values-section {
+    padding: 60px 20px;
+    background-color: #ffffff;
+  }
+  
+  .values-section h2 {
+    font-size: 2.4rem;
+    color: #ffcc00; /* Gold color */
+    margin-bottom: 35px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 0px #800080,   /* Purple shadow for a 3D look */
+                 4px 4px 0px rgba(0, 0, 0, 0.1), /* Light shadow for depth */
+                 6px 6px 0px rgba(0, 0, 0, 0.2); /* Darker shadow for layering */
+  }
+
+  /* Core Values Section */
+.values-section {
+    padding: 60px 20px;
+    background-color: #ffffff;
+  }
+  
+  .values-section h2 {
+    font-size: 2.4rem;
+    color: #ffcc00;
+    margin-bottom: 35px;
+    text-align: center;
+  }
+  
+  .values-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Individual Value Card */
+  .value-card {
+    background: linear-gradient(135deg, #0044cc 50%, #800000     50%);
+    color: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    width: 220px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .value-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .value-card h3 {
+    font-size: 1.4rem;
+    margin: 20px 0 10px;
+    color: #ffcc00;
+  }
+  
+  .value-card p {
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .value-card.integrity { background: linear-gradient(135deg, #0044cc, #ffcc00); }
+  .value-card.passion { background: linear-gradient(135deg, #ff66b2, #ffcc00); }
+  .value-card.hardwork { background: linear-gradient(135deg, #ffa500, #ff66b2); }
+  .value-card.teamspirit { background: linear-gradient(135deg, #00ccff, #0044cc); }
+  .value-card.excellence { background: linear-gradient(135deg, #66cc66, #ffa500); }
+  
+  /* Icons for Values */
+  .icon {
+    font-size: 2.8rem;
+    margin-bottom: 12px;
+  }
+  
+  
+  
+  
+  
+    /* Curriculum Blend Section */
+    .curriculum-blend {
+      padding: 40px 20px;
+      background-color: #ffe6f0; /* Light pink */
+      text-align: center;
+    }
+    
+    .curriculum-details {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .curriculum-point {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      width: 150px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Why Choose Us Section */
+    .why-choose-us {
+      padding: 40px 20px;
+      background-color: #f0f8ff; /* Light blue */
+      text-align: center;
+    }
+    
+    .reasons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    
+    .reason-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 220px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+
+/* Gallery Section */
+.gallery-section {
+    padding: 60px 20px;
+    background-color: #f9f9f9; /* Light background color */
+    text-align: center;
+}
+
+/* Gallery Title */
+.gallery-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #3a3a3a;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+/* Gallery Grid Container */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 20px;
+    justify-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 5px solid #800000; /* Maroon border around the entire grid */
+    border-radius: 12px; /* Rounded corners for the grid border */
+    padding: 20px; /* Space between the grid and the border */
+}
+
+/* Gallery Item */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Gallery Item Image */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover effect for gallery items */
+.gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item:hover img {
+    opacity: 0.85;
+}
+
+/* Responsive Grid */
+@media screen and (max-width: 1200px) {
+    .gallery-grid {
+        grid-template-columns: repeat(3, 1fr); /* Keep 3 columns for medium screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* 1 column for small screens */
+    }
+}
+
+
+/* Gallery Item */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Gallery Item Image */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* 3D Hover Effect for Gallery Items */
+.gallery-item:hover {
+    transform: translateY(-10px); /* Slight lift on hover */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Creates a shadow for depth */
+}
+
+.gallery-item:hover img {
+    opacity: 0.85; /* Slightly fade image on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
