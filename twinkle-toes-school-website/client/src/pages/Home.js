@@ -36,14 +36,27 @@ function Home() {
 
   return (
     <div className="home">
-      <section className="hero-banner">
-        <div className="overlay">
-          <h1>Sure Steps to Greatness</h1>
-          <p>Empowering young minds with a balanced blend of academic and personal growth.</p>
-          <button className="cta-button">Learn More</button>
-        </div>
-      </section>
+      <section className="hero-banner parallax">
+  <div className="floating-images">
+    <a href="/about" className="floating-image image-1">
+      <img src={photos[0]} alt="About Us" />
+    </a>
+    <a href="/admission" className="floating-image image-2">
+      <img src={photos[1]} alt="Admissions" />
+    </a>
+    <a href="/events" className="floating-image image-3">
+      <img src={photos[2]} alt="Events" />
+    </a>
+  </div>
+  <div className="maroon-overlay"></div>
+  <div className="hero-content">
+    <h1>Sure Steps to Greatness</h1>
+    <p>Empowering young minds with a balanced blend of academic and personal growth.</p>
+    <button className="cta-button">Learn More</button>
+  </div>
+</section>
 
+      
       <section className="intro-section">
         <div className="intro-content">
           <div className="title-box">
