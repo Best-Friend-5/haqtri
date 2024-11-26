@@ -9,7 +9,7 @@
   overflow: hidden;
   color: white;
   text-align: center;
-  padding-top: 100px; /* Added padding to create space */
+  padding-top: 120px; /* Added padding to create space */
 }
 
 /* Updated Overlay */
@@ -27,11 +27,11 @@
   position: relative;
   z-index: 2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Enhanced 3D text effect */
-  margin-bottom: 60px; /* Moved hero content upward */
+  margin-bottom: 60px;
 }
 
 .hero-content h1 {
-  font-size: 3rem; /* Adjusted for balance */
+  font-size: 3rem;
   margin: 0;
   font-weight: bold;
 }
@@ -75,24 +75,65 @@
 }
 
 .floating-image {
+  position: relative;
+  width: 200px;
+  height: 200px;
   pointer-events: auto;
   animation: float 6s ease-in-out infinite;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .floating-image img {
-  width: 180px; /* Larger size */
-  height: 180px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 50%; /* Circular hover effect */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
 }
 
 .floating-image:hover img {
-  transform: translateY(-10px) scale(1.1); /* Lift and slight scale on hover */
+  transform: scale(1.1);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
+
+/* Overlay for Floating Images */
+
+
+.floating-image:hover .floating-overlay {
+  transform: scale(1.1); /* Expands overlay with image */
+  background: rgba(128, 0, 0, 0.8); /* Darker maroon on hover */
+}
+
+/* Floating Image Text (Centered and 3D Effect) */
+.floating-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 
+    1px 1px 2px rgba(0, 0, 0, 0.8), 
+    -1px -1px 2px rgba(255, 255, 255, 0.2);
+  letter-spacing: 1px;
+  text-align: center;
+  z-index: 3; /* Ensures text is above the overlay */
+}
+
+.floating-image:hover .floating-text {
+  transform: translate(-50%, -50%) translateY(-10px);
+  text-shadow: 
+    2px 2px 5px rgba(0, 0, 0, 0.8), 
+    -2px -2px 3px rgba(255, 255, 255, 0.3);
+}
+
+
+
 
 /* Floating Animation */
 @keyframes float {
@@ -133,6 +174,7 @@
     padding: 12px 25px;
   }
 }
+
 
 
 

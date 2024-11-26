@@ -34,7 +34,7 @@ function Navbar() {
         <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
         <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
         <li><Link to="/admissions" onClick={() => setIsOpen(false)}>Admissions</Link></li>
-        <li><Link to="/gallery" onClick={() => setIsOpen(false)}>Gallery</Link></li>
+        {/* <li><Link to="/gallery" onClick={() => setIsOpen(false)}>Gallery</Link></li> */}
         <li><Link to="/portal" onClick={() => setIsOpen(false)}>Portal</Link></li>
         <li className="contact-btn"><Link to="/contact" onClick={() => setIsOpen(false)}>Contact Us</Link></li>
       </ul>

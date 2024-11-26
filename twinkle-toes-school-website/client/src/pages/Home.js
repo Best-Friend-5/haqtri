@@ -9,8 +9,12 @@ import photo6 from '../images/logo.jpg';
 import photo7 from '../images/logo.jpg';
 import photo8 from '../images/logo.jpg';
 import photo9 from '../images/logo.jpg';
+import floating1 from '../images/about3.jpg';
+import floating2 from '../images/event1.jpg';
+import floating3 from '../images/images.jpeg';
 
 const photos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, photo8, photo9];
+const floating = [floating1, floating2, floating3];
 
 function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -37,22 +41,29 @@ function Home() {
   return (
     <div className="home">
       <section className="hero-banner parallax">
-  <div className="floating-images">
-    <a href="/about" className="floating-image image-1">
-      <img src={photos[0]} alt="About Us" />
-    </a>
-    <a href="/admission" className="floating-image image-2">
-      <img src={photos[1]} alt="Admissions" />
-    </a>
-    <a href="/events" className="floating-image image-3">
-      <img src={photos[2]} alt="Events" />
-    </a>
-  </div>
+      <div className="floating-images">
+  <a href="/about" className="floating-image">
+    <img src={floating[0]} alt="About Us" />
+    <div className="floating-overlay"></div>
+    <span className="floating-text">Our School</span>
+  </a>
+  <a href="/events" className="floating-image">
+    <img src={floating[1]} alt="Events" />
+    <div className="floating-overlay"></div>
+    <span className="floating-text">Events</span>
+  </a>
+  <a href="/images" className="floating-image">
+    <img src={floating[2]} alt="School Moments" />
+    <div className="floating-overlay"></div>
+    <span className="floating-text">Gallery</span>
+  </a>
+</div>
+
   <div className="maroon-overlay"></div>
   <div className="hero-content">
     <h1>Sure Steps to Greatness</h1>
-    <p>Empowering young minds with a balanced blend of academic and personal growth.</p>
-    <button className="cta-button">Learn More</button>
+    <p><i>"Empowering young minds with a balanced blend of academic and personal growth."</i></p>
+    <button className="cta-button">ENROLL NOW</button>
   </div>
 </section>
 
