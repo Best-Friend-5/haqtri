@@ -1,8 +1,7 @@
-// client/src/App.js
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer'; // Import the Footer component
 import Home from './pages/Home';
 import About from './pages/About';
 import Admissions from './pages/Admissions';
@@ -24,6 +23,7 @@ function App() {
           <Route path="/portal" element={<Portal />} />
         </Routes>
       </div>
+      <Footer /> {/* Add the Footer component here */}
     </Router>
   );
 }
