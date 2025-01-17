@@ -1,0 +1,154 @@
+/* donation.css */
+
+/* Global styling for donation page */
+.donation-page {
+    padding: 20px;
+    margin-top: 80px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .donation-heading {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .donation-description {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 40px;
+  }
+  
+  /* Amount selection styles */
+  .amount-selection {
+    margin-bottom: 20px;
+  }
+  
+  .amount-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .amount-buttons button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .amount-buttons button:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .custom-amount {
+    margin-top: 10px;
+  }
+  
+  .custom-amount input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Payment method selection */
+  .payment-method-selection {
+    margin-bottom: 20px;
+  }
+  
+  .payment-method-selection label {
+    display: block;
+    font-size: 1rem;
+    margin: 5px 0;
+  }
+  
+  .payment-method-selection input {
+    margin-right: 10px;
+  }
+  
+  /* Email input field */
+  .email-input {
+    margin-bottom: 20px;
+  }
+  
+  .email-input input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  /* Success message */
+  .success-message {
+    background-color: #dff0d8;
+    color: #3c763d;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .success-message h2 {
+    font-size: 2rem;
+  }
+  
+  .success-message p {
+    font-size: 1.2rem;
+  }
+  
+  /* Error message */
+  .error-message {
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Donate button */
+  .donate-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .donate-button:hover {
+    background-color: #45a049;
+  }
+  
+  .donate-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .donation-page {
+      padding: 10px;
+    }
+  
+    .donate-button {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.4rem;
+    }
+  
+    .donation-page input {
+      padding: 12px;
+      font-size: 1.2rem;
+    }
+  }
+  
