@@ -1,0 +1,171 @@
+.explore-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff; /* Light mode background */
+  }
+  
+  /* Search and Filters */
+  .search-filters {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+    border-radius: 5px;
+    padding: 5px;
+    background: #ffffff;
+    margin-bottom: 15px;
+  }
+  
+  .search-input {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    background: transparent;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .search-input:focus {
+    outline: none;
+  }
+  
+  .search-icon {
+    color: #4A8B6F; /* Earthy Green */
+    margin-left: 10px;
+  }
+  
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .filters label {
+    display: flex;
+    align-items: center;
+    color: #2A3F54; /* Deep Navy Blue */
+    font-size: 14px;
+  }
+  
+  .filters input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  /* Property Grid */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .property-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  
+  .property-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(42, 63, 84, 0.2); /* Navy shadow */
+  }
+  
+  .property-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .property-info {
+    padding: 10px;
+  }
+  
+  .property-title {
+    font-size: 18px;
+    margin: 0 0 5px;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .property-price {
+    font-size: 16px;
+    color: #CC7357; /* Warm Terracotta */
+    margin-bottom: 5px;
+  }
+  
+  .property-location {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .property-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .tag {
+    display: inline-block;
+    background: #4A8B6F; /* Earthy Green */
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  
+  /* Dark Mode */
+  .explore-container.dark {
+    background: #1A2530; /* Darker Navy */
+  }
+  
+  .explore-container.dark .search-bar {
+    background: #2D2D2D;
+    border-color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .explore-container.dark .search-input {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .explore-container.dark .filters label {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .explore-container.dark .property-card {
+    background: #2D2D2D;
+    border-color: #333;
+  }
+  
+  .explore-container.dark .property-title {
+    color: #fff;
+  }
+  
+  .explore-container.dark .property-price {
+    color: #CC7357; /* Warm Terracotta */
+  }
+  
+  .explore-container.dark .property-location {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .explore-container {
+      padding: 10px;
+    }
+  
+    .property-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .filters {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }

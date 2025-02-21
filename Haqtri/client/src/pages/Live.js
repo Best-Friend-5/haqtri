@@ -1,158 +1,168 @@
 import React, { useState } from 'react';
-import './Donation.css'; // Ensure CSS is properly imported
+import { FaTv, FaPaperPlane, FaCommentDots, FaVideo } from 'react-icons/fa';
+import Profile from '../images/profpic.jpg'; // Streamer 1
+import Profile1 from '../images/profpic3.jpg'; // Streamer 1
+import Profile3 from '../images/profpic2.jpg'; // Streamer 2
+import './Live.css';
 
-const Donation = () => {
-  const [amount, setAmount] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('card'); // Default to 'card'
-  const [customAmount, setCustomAmount] = useState('');
-  const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [donationSuccess, setDonationSuccess] = useState(false);
-  const [error, setError] = useState(null);
+const Live = ({ darkMode }) => {
+  const [liveStreams, setLiveStreams] = useState([
+    {
+      id: 1,
+      title: "Eco-Friendly Construction Demo",
+      streamer: "Ali Shariatian",
+      profileImg: Profile1,
+      isLive: true,
+      chatMessages: [
+        { id: 1, user: "Lili Rose", text: "Great demo! How do you ensure zero-waste?", timestamp: "10:30 AM" },
+        { id: 2, user: "John Doe", text: "Love the solar panel setup!", timestamp: "10:31 AM" },
+      ],
+    },
+    {
+      id: 2,
+      title: "Live Q&A: Sustainable Materials",
+      streamer: "Lili Rose",
+      profileImg: Profile3,
+      isLive: true,
+      chatMessages: [
+        { id: 1, user: "Ali Shariatian", text: "What’s your favorite eco-material?", timestamp: "10:45 AM" },
+      ],
+    },
+  ]);
+  const [selectedStream, setSelectedStream] = useState(null);
+  const [newMessage, setNewMessage] = useState('');
+  const [newStreamTitle, setNewStreamTitle] = useState('');
 
-  const handleAmountChange = (event) => {
-    setAmount(event.target.value);
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (!newMessage.trim() || !selectedStream) return;
+
+    const updatedStreams = liveStreams.map((stream) =>
+      stream.id === selectedStream.id
+        ? {
+            ...stream,
+            chatMessages: [
+              ...stream.chatMessages,
+              {
+                id: stream.chatMessages.length + 1,
+                user: "You",
+                text: newMessage,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              },
+            ],
+          }
+        : stream
+    );
+    setLiveStreams(updatedStreams);
+    setSelectedStream(updatedStreams.find((stream) => stream.id === selectedStream.id));
+    setNewMessage('');
   };
 
-  const handleCustomAmountChange = (event) => {
-    setCustomAmount(event.target.value);
-  };
+  const handleGoLive = (e) => {
+    e.preventDefault();
+    if (!newStreamTitle.trim()) return;
 
-  const handlePaymentMethodChange = (event) => {
-    setPaymentMethod(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!amount && !customAmount) {
-      setError('Please select or enter a donation amount.');
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-
-    // Prepare donation data
-    const donationData = {
-      amount: customAmount ? customAmount : amount,
-      email: email,
-      paymentMethod: paymentMethod,
-      paymentMethodId: 'mock-payment-method-id', // Replace with actual payment method ID from frontend SDK
+    const newStream = {
+      id: liveStreams.length + 1,
+      title: newStreamTitle,
+      streamer: "You", // Placeholder for current user
+      profileImg: Profile, // Placeholder; update with actual user profile
+      isLive: true,
+      chatMessages: [],
     };
-
-    try {
-      const response = await fetch('/api/donations/donate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(donationData),
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        setDonationSuccess(true);
-      } else {
-        setError(result.error || 'Something went wrong');
-      }
-    } catch (error) {
-      setError('Failed to process donation.');
-    } finally {
-      setIsLoading(false);
-    }
+    setLiveStreams([newStream, ...liveStreams]); // Add new stream at the top
+    setNewStreamTitle('');
   };
 
   return (
-    <div className="donation-page">
-      <h1 className="donation-heading">Donation Page</h1>
-      <p className="donation-description">Your contribution helps us make a difference!</p>
-      
-      {donationSuccess ? (
-        <div className="success-message">
-          <h2>Thank you for your donation!</h2>
-          <p>Your support means a lot to us.</p>
+    <div className={`live-container ${darkMode ? 'dark' : ''}`}>
+      {/* Stories-like Live Streams Section */}
+      <div className="live-streams-container">
+        <div className="live-streams">
+          {liveStreams.map((stream) => (
+            <div
+              key={stream.id}
+              className={`stream-story ${selectedStream?.id === stream.id ? 'active' : ''}`}
+              onClick={() => setSelectedStream(stream)}
+            >
+              <div className="profile-photo">
+                <img src={stream.profileImg} alt={stream.streamer} />
+                <span className="live-indicator">LIVE</span>
+              </div>
+              <p className="name">{stream.streamer}</p>
+            </div>
+          ))}
         </div>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div className="amount-selection">
-            <h3>Choose Donation Amount</h3>
-            <div className="amount-buttons">
-              <button type="button" onClick={() => { setAmount(10); setCustomAmount(''); }}>$10</button>
-              <button type="button" onClick={() => { setAmount(25); setCustomAmount(''); }}>$25</button>
-              <button type="button" onClick={() => { setAmount(50); setCustomAmount(''); }}>$50</button>
-            </div>
+      </div>
 
-            <div className="custom-amount">
-              <input
-                type="number"
-                placeholder="Enter custom amount"
-                value={customAmount}
-                onChange={handleCustomAmountChange}
-              />
-            </div>
-          </div>
-
-          <div className="payment-method-selection">
-            <h3>Select Payment Method</h3>
-            <label>
-              <input
-                type="radio"
-                value="card"
-                checked={paymentMethod === 'card'}
-                onChange={handlePaymentMethodChange}
-              />
-              Credit/Debit Card
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="transfer"
-                checked={paymentMethod === 'transfer'}
-                onChange={handlePaymentMethodChange}
-              />
-              Bank Transfer
-            </label>
-
-            {/* Conditionally render the payment options */}
-            {paymentMethod === 'card' && (
-              <div className="card-payment-options">
-                <p>Enter credit card details</p>
-                {/* Additional card payment fields can go here */}
-              </div>
-            )}
-            {paymentMethod === 'transfer' && (
-              <div className="transfer-payment-options">
-                <p>Provide transfer details</p>
-                {/* Additional bank transfer details can go here */}
-              </div>
-            )}
-          </div>
-
-          <div className="email-input">
-            <h3>Enter Your Email Address</h3>
+      {/* Go Live Creator */}
+      <form className="go-live-creator" onSubmit={handleGoLive}>
+        <div className="go-live-author">
+          <img src={Profile} alt="Your Profile" className="profile-photo" />
+          <div className="go-live-input-container">
             <input
-              type="email"
-              placeholder="Your email"
-              value={email}
-              onChange={handleEmailChange}
-              required
+              type="text"
+              placeholder="What's your live stream about?"
+              className="go-live-input"
+              value={newStreamTitle}
+              onChange={(e) => setNewStreamTitle(e.target.value)}
             />
+            <button type="submit" className="btn-go-live" disabled={!newStreamTitle.trim()}>
+              <FaVideo /> Go Live
+            </button>
           </div>
+        </div>
+      </form>
 
-          {error && <div className="error-message">{error}</div>}
-
-          <button type="submit" className="donate-button" disabled={isLoading}>
-            {isLoading ? 'Processing...' : 'Donate Now'}
-          </button>
-        </form>
-      )}
+      {/* Selected Stream and Chat */}
+      <div className="live-feed">
+        {selectedStream ? (
+          <div className="stream-card">
+            <div className="stream-header">
+              <div className="stream-user">
+                <img src={selectedStream.profileImg} alt={selectedStream.streamer} className="profile-photo" />
+                <div className="stream-info">
+                  <h3>{selectedStream.streamer}</h3>
+                  <small>{selectedStream.title}</small>
+                </div>
+              </div>
+              <span className="live-indicator">LIVE</span>
+            </div>
+            <div className="stream-content">
+              <div className="video-placeholder">
+                <p>Live Stream: {selectedStream.title}</p>
+              </div>
+            </div>
+            <div className="chat-area">
+              <div className="chat-messages">
+                {selectedStream.chatMessages.map((msg) => (
+                  <div key={msg.id} className={`chat-message ${msg.user === 'You' ? 'sent' : 'received'}`}>
+                    <span className="chat-user">{msg.user}:</span>
+                    <p>{msg.text}</p>
+                    <small>{msg.timestamp}</small>
+                  </div>
+                ))}
+              </div>
+              <form className="chat-input" onSubmit={handleSendMessage}>
+                <input
+                  type="text"
+                  placeholder="Type a message..."
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  className="input-field"
+                />
+                <button type="submit" className="send-btn" disabled={!newMessage.trim()}>
+                  <FaPaperPlane />
+                </button>
+              </form>
+            </div>
+          </div>
+        ) : (
+          <p className="no-stream">Select a live stream to watch or start your own</p>
+        )}
+      </div>
     </div>
   );
 };
 
-export default Donation;
+export default Live;

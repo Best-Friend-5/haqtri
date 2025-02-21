@@ -1,0 +1,211 @@
+.bookmark-container {
+    max-width: 800px; /* Match Home.js */
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff; /* Light mode background */
+  }
+  
+  .bookmark-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin-bottom: 20px;
+  }
+  
+  .bookmark-icon {
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  .bookmark-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  
+  .bookmark-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .bookmark-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .post-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .profile-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+    padding: 3px;
+  }
+  
+  .profile-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .post-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .post-info small {
+    color: #666;
+    font-size: 0.8rem;
+  }
+  
+  .post-options {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  .post-content {
+    padding: 1rem;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .post-images {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .post-images img {
+    width: 100%;
+    border-radius: 8px;
+    height: auto;
+  }
+  
+  .post-interactions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: 1px solid #eee;
+  }
+  
+  .interaction-buttons {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .interaction-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: #4A8B6F; /* Earthy Green */
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .interaction-btn:hover {
+    color: #CC7357; /* Warm Terracotta */
+    transform: scale(1.1);
+  }
+  
+  .bookmark-btn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+  }
+  
+  .bookmark-btn.active {
+    color: #D4AF37; /* Metallic Gold */
+  }
+  
+  .bookmark-btn:hover {
+    color: #CC7357; /* Warm Terracotta */
+  }
+  
+  .no-bookmarks {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+    padding: 20px;
+  }
+  
+  /* Dark Mode */
+  .bookmark-container.dark {
+    background: #1A2530; /* Darker Navy */
+  }
+  
+  .bookmark-container.dark .bookmark-title {
+    color: #fff;
+  }
+  
+  .bookmark-container.dark .bookmark-card {
+    background: #2D2D2D;
+    border-color: #333;
+  }
+  
+  .bookmark-container.dark .post-info h3,
+  .bookmark-container.dark .post-content {
+    color: #fff;
+  }
+  
+  .bookmark-container.dark .post-info small,
+  .bookmark-container.dark .post-options,
+  .bookmark-container.dark .interaction-btn,
+  .bookmark-container.dark .bookmark-btn {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .bookmark-container.dark .interaction-btn:hover {
+    color: #CC7357; /* Warm Terracotta */
+  }
+  
+  .bookmark-container.dark .bookmark-btn.active {
+    color: #D4AF37; /* Metallic Gold */
+  }
+  
+  .bookmark-container.dark .bookmark-btn:hover {
+    color: #CC7357; /* Warm Terracotta */
+  }
+  
+  .bookmark-container.dark .no-bookmarks {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .bookmark-container {
+      padding: 10px;
+    }
+  
+    .profile-photo {
+      width: 60px;
+      height: 60px;
+    }
+  }

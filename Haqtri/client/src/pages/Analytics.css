@@ -1,0 +1,167 @@
+.analytics-container {
+    max-width: 800px; /* Match Home.js */
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff; /* Light mode background */
+  }
+  
+  .analytics-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin-bottom: 20px;
+  }
+  
+  .chart-icon {
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .analytics-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .analytics-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .analytics-card.full-width {
+    grid-column: span 2; /* Spans full width for larger cards */
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .card-icon {
+    color: #4A8B6F; /* Earthy Green */
+    font-size: 20px;
+  }
+  
+  .card-header h3 {
+    font-size: 16px;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin: 0;
+  }
+  
+  .card-value {
+    font-size: 24px;
+    color: #CC7357; /* Warm Terracotta */
+    margin: 0 0 5px;
+    font-weight: bold;
+  }
+  
+  .analytics-card small {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  /* Chart Container */
+  .chart-container {
+    height: 200px; /* Fixed height for charts */
+    margin-bottom: 10px;
+    overflow: hidden; /* Ensure charts fit within container */
+  }
+  
+  /* Activity Log */
+  .activity-log ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .activity-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .activity-date {
+    font-size: 14px;
+    color: #2A3F54; /* Deep Navy Blue */
+    font-weight: bold;
+  }
+  
+  .activity-action {
+    font-size: 14px;
+    color: #666;
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  .activity-impact {
+    font-size: 14px;
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  /* Dark Mode */
+  .analytics-container.dark {
+    background: #1A2530; /* Darker Navy */
+  }
+  
+  .analytics-container.dark .analytics-title {
+    color: #fff;
+  }
+  
+  .analytics-container.dark .analytics-card {
+    background: #2D2D2D;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .analytics-container.dark .card-header h3 {
+    color: #fff;
+  }
+  
+  .analytics-container.dark .card-value {
+    color: #CC7357; /* Warm Terracotta */
+  }
+  
+  .analytics-container.dark .analytics-card small {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .analytics-container.dark .activity-date {
+    color: #fff;
+  }
+  
+  .analytics-container.dark .activity-action {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .analytics-container.dark .activity-item {
+    border-bottom: 1px solid #333;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .analytics-container {
+      padding: 10px;
+    }
+  
+    .analytics-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .analytics-card.full-width {
+      grid-column: span 1; /* Reset to single column on mobile */
+    }
+  
+    .chart-container {
+      height: 150px; /* Smaller charts on mobile */
+    }
+  }

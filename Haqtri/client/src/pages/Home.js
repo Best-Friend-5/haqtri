@@ -5,12 +5,12 @@ import { FaHeart, FaCommentDots, FaShare, FaBookmark, FaEdit, FaCamera } from 'r
 import Profile1 from '../images/profpic.jpg'; // Post creator profile
 import Profile3 from '../images/profpic2.jpg'; // Feed post profile
 import Profile8 from '../images/house1.jpg'; // Your story profile
-import Profile11 from '../images/house2.jpg'; // User 1 story profile
+import Profile11 from '../images/house2.png'; // User 1 story profile
 import Profile12 from '../images/house3.jpg'; // User 2 story profile
 import Profile13 from '../images/house4.jpg'; // User 3 story profile
 import Profile14 from '../images/house5.jpg'; // User 4 story profile
 import Profile15 from '../images/house6.jpg'; // User 5 story profile
-import Feed5 from '../images/house2.jpg'; // Post image 1
+import Feed5 from '../images/house2.png'; // Post image 1
 import Feed2 from '../images/house5.jpg'; // Post image 2
 
 import './Home.css';

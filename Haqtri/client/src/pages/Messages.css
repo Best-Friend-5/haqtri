@@ -1,0 +1,281 @@
+.messages-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff; /* Light mode background */
+  }
+  
+  .messages-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin-bottom: 20px;
+  }
+  
+  .chat-icon {
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  .messages-layout {
+    display: flex;
+    gap: 20px;
+    height: calc(100vh - 100px); /* Adjust height based on padding and title */
+  }
+  
+  /* Conversation List */
+  .conversation-list {
+    width: 300px;
+    overflow-y: auto;
+    border-right: 1px solid #eee;
+  }
+  
+  .conversation-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .conversation-item:hover {
+    background: #f9e9e4; /* Light Terracotta tint */
+  }
+  
+  .conversation-item.active {
+    background: #CC7357; /* Warm Terracotta */
+    color: #ffffff;
+  }
+  
+  .conversation-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .conversation-info {
+    flex: 1;
+  }
+  
+  .conversation-user {
+    font-size: 16px;
+    margin: 0;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .conversation-preview {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+  
+  .unread-count {
+    background: #D4AF37; /* Metallic Gold */
+    color: #2A3F54; /* Deep Navy Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  
+  /* Chat Area */
+  .chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .chat-header h3 {
+    font-size: 18px;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin: 0;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 70%;
+  }
+  
+  .message.sent {
+    background: #CC7357; /* Warm Terracotta */
+    color: #ffffff;
+    margin-left: auto;
+  }
+  
+  .message.received {
+    background: #f9e9e4; /* Light Terracotta tint */
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .message p {
+    margin: 0;
+  }
+  
+  .message small {
+    font-size: 12px;
+    color: #666;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  .message.sent small {
+    color: #ffffff;
+  }
+  
+  .message-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #eee;
+  }
+  
+  .input-field {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+    border-radius: 5px 0 0 5px;
+    font-size: 14px;
+    background: #ffffff;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .input-field:focus {
+    outline: none;
+  }
+  
+  .send-btn {
+    background: #CC7357; /* Warm Terracotta */
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .send-btn:hover {
+    background: #b55f43; /* Darker Terracotta */
+  }
+  
+  .no-conversation {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+    padding: 20px;
+    flex: 1;
+  }
+  
+  /* Dark Mode */
+  .messages-container.dark {
+    background: #1A2530; /* Darker Navy */
+  }
+  
+  .messages-container.dark .messages-title {
+    color: #fff;
+  }
+  
+  .messages-container.dark .conversation-item {
+    background: #2D2D2D;
+  }
+  
+  .messages-container.dark .conversation-item:hover {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .messages-container.dark .conversation-item.active {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .messages-container.dark .conversation-user {
+    color: #fff;
+  }
+  
+  .messages-container.dark .conversation-preview {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .messages-container.dark .unread-count {
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .messages-container.dark .chat-header h3 {
+    color: #fff;
+  }
+  
+  .messages-container.dark .message.received {
+    background: #333;
+    color: #fff;
+  }
+  
+  .messages-container.dark .message.sent {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .messages-container.dark .message small {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .messages-container.dark .input-field {
+    background: #2D2D2D;
+    color: #b0b0b0; /* Light grey */
+    border-color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .messages-container.dark .no-conversation {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .messages-container {
+      padding: 10px;
+    }
+  
+    .messages-layout {
+      flex-direction: column;
+    }
+  
+    .conversation-list {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #eee;
+      max-height: 30vh;
+    }
+  
+    .chat-area {
+      flex: none;
+    }
+  
+    .message {
+      max-width: 90%;
+    }
+  }

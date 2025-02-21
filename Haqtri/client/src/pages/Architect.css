@@ -1,0 +1,274 @@
+.architect-container {
+    max-width: 1200px; /* Wider than Home.js for dual-column layout */
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff; /* Light mode background */
+  }
+  
+  .architect-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin-bottom: 20px;
+  }
+  
+  .city-icon {
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  .architect-layout {
+    display: flex;
+    gap: 20px;
+    height: calc(100vh - 100px); /* Adjust for title and padding */
+  }
+  
+  /* Architect List */
+  .architect-list {
+    width: 400px;
+    overflow-y: auto;
+    border-right: 1px solid #eee;
+  }
+  
+  .architect-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .architect-item:hover {
+    background: #f9e9e4; /* Light Terracotta tint */
+  }
+  
+  .architect-item.active {
+    background: #CC7357; /* Warm Terracotta */
+    color: #ffffff;
+  }
+  
+  .profile-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+    padding: 3px;
+    margin-right: 1rem;
+  }
+  
+  .profile-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .architect-info {
+    flex: 1;
+  }
+  
+  .architect-info h3 {
+    font-size: 1rem;
+    margin: 0 0 5px;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .architect-location {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 3px;
+  }
+  
+  .architect-specialty {
+    font-size: 0.9rem;
+    color: #4A8B6F; /* Earthy Green */
+    margin: 0 0 3px;
+  }
+  
+  .architect-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #D4AF37; /* Metallic Gold */
+  }
+  
+  .star-icon {
+    color: #D4AF37; /* Metallic Gold */
+  }
+  
+  .connect-btn {
+    background: #CC7357; /* Warm Terracotta */
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease;
+  }
+  
+  .connect-btn:hover {
+    background: #b55f43; /* Darker Terracotta */
+  }
+  
+  /* Architect Profile */
+  .architect-profile {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profile-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .profile-photo.large {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-card h3 {
+    font-size: 1.5rem;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin: 0 0 0.5rem;
+  }
+  
+  .profile-location {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 0.5rem;
+  }
+  
+  .profile-specialty {
+    font-size: 1rem;
+    color: #4A8B6F; /* Earthy Green */
+    margin: 0 0 0.5rem;
+  }
+  
+  .profile-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 1rem;
+    color: #D4AF37; /* Metallic Gold */
+    margin-bottom: 1rem;
+  }
+  
+  .profile-bio {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 1rem;
+  }
+  
+  .message-btn {
+    background: #2A3F54; /* Deep Navy Blue */
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease;
+  }
+  
+  .message-btn:hover {
+    background: #1f2e3f; /* Darker Navy */
+  }
+  
+  .no-selection {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+  }
+  
+  /* Dark Mode */
+  .architect-container.dark {
+    background: #1A2530; /* Darker Navy */
+  }
+  
+  .architect-container.dark .architect-title {
+    color: #fff;
+  }
+  
+  .architect-container.dark .architect-item {
+    background: #2D2D2D;
+  }
+  
+  .architect-container.dark .architect-item:hover {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .architect-container.dark .architect-item.active {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .architect-container.dark .architect-info h3 {
+    color: #fff;
+  }
+  
+  .architect-container.dark .architect-location,
+  .architect-container.dark .architect-specialty {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .architect-container.dark .profile-card {
+    background: #2D2D2D;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .architect-container.dark .profile-card h3 {
+    color: #fff;
+  }
+  
+  .architect-container.dark .profile-location,
+  .architect-container.dark .profile-bio {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .architect-container.dark .no-selection {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .architect-container {
+      padding: 10px;
+    }
+  
+    .architect-layout {
+      flex-direction: column;
+    }
+  
+    .architect-list {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #eee;
+      max-height: 40vh;
+    }
+  
+    .profile-photo {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .profile-photo.large {
+      width: 80px;
+      height: 80px;
+    }
+  }

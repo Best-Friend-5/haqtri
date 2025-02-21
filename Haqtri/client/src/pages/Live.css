@@ -1,0 +1,392 @@
+.live-container {
+    max-width: 800px; /* Match Home.js */
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff; /* Light mode background */
+  }
+  
+  /* Live Streams Section (Stories-like) */
+  .live-streams-container {
+    margin-bottom: 2.5rem;
+  }
+  
+  .live-streams {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+  }
+  
+  .stream-story {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .stream-story:hover {
+    transform: scale(1.05);
+  }
+  
+  .stream-story.active .profile-photo {
+    border-color: #D4AF37; /* Metallic Gold for active */
+  }
+  
+  .profile-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+    padding: 3px;
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .live-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #CC7357; /* Warm Terracotta */
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .name {
+    font-size: 0.9rem;
+    color: #2A3F54; /* Deep Navy Blue */
+    text-align: center;
+  }
+  
+  /* Go Live Creator */
+  .go-live-creator {
+    margin: 2rem 0;
+  }
+  
+  .go-live-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .go-live-input-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .go-live-input {
+    flex: 1;
+    height: 45px;
+    padding: 1rem 8rem 1rem 1.5rem; /* Match Home.js */
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+    border-radius: 35px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: #2A3F54; /* Deep Navy Blue */
+    z-index: 1;
+  }
+  
+  .go-live-input:focus {
+    outline: none;
+    border-color: transparent !important;
+    animation: rainbow-flow 1.5s linear infinite;
+  }
+  
+  /* Rainbow animation from Home.js */
+  @keyframes rainbow-flow {
+    0% { box-shadow: 0 0 15px rgba(255,0,0,0.4); }
+    25% { box-shadow: 0 0 15px rgba(0,255,0,0.4); }
+    50% { box-shadow: 0 0 15px rgba(0,0,255,0.4); }
+    75% { box-shadow: 0 0 15px rgba(128,0,128,0.4); }
+    100% { box-shadow: 0 0 15px rgba(255,0,0,0.4); }
+  }
+  
+  .btn-go-live {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #CC7357; /* Warm Terracotta */
+    color: #fff;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 2;
+  }
+  
+  .btn-go-live:hover {
+    background: #b55f43; /* Darker Terracotta */
+    transform: translateY(-50%) scale(1.05);
+  }
+  
+  .btn-go-live:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateY(-50%);
+  }
+  
+  /* Live Feed */
+  .live-feed {
+    margin-top: 2rem;
+  }
+  
+  .stream-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .stream-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .stream-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .stream-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .stream-info small {
+    color: #666;
+    font-size: 0.8rem;
+  }
+  
+  .stream-content {
+    padding: 1rem;
+  }
+  
+  .video-placeholder {
+    width: 100%;
+    height: 300px; /* Fixed height for consistency */
+    background: #2A3F54; /* Deep Navy Blue */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border-radius: 8px;
+  }
+  
+  .chat-area {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+  }
+  
+  .chat-messages {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  
+  .chat-message {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+  }
+  
+  .chat-message.sent {
+    background: #CC7357; /* Warm Terracotta */
+    color: #fff;
+    margin-left: auto;
+    max-width: 70%;
+  }
+  
+  .chat-message.received {
+    background: #f9e9e4; /* Light Terracotta tint */
+    color: #2A3F54; /* Deep Navy Blue */
+    max-width: 70%;
+  }
+  
+  .chat-user {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .chat-message p {
+    margin: 0;
+  }
+  
+  .chat-message small {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  .chat-message.sent small {
+    color: #fff;
+  }
+  
+  .chat-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-field {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+    border-radius: 5px 0 0 5px;
+    font-size: 14px;
+    background: #ffffff;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .input-field:focus {
+    outline: none;
+  }
+  
+  .send-btn {
+    background: #CC7357; /* Warm Terracotta */
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .send-btn:hover {
+    background: #b55f43; /* Darker Terracotta */
+  }
+  
+  .send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .no-stream {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+    padding: 20px;
+  }
+  
+  /* Dark Mode */
+  .live-container.dark {
+    background: #1A2530; /* Darker Navy */
+  }
+  
+  .live-container.dark .stream-story .name {
+    color: #fff;
+  }
+  
+  .live-container.dark .go-live-input {
+    background: #222;
+    color: #b0b0b0; /* Light grey */
+    border-color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .live-container.dark .btn-go-live {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .live-container.dark .btn-go-live:hover {
+    background: #b55f43; /* Darker Terracotta */
+  }
+  
+  .live-container.dark .stream-card {
+    background: #2D2D2D;
+    border-color: #333;
+  }
+  
+  .live-container.dark .stream-info h3 {
+    color: #fff;
+  }
+  
+  .live-container.dark .stream-info small {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .live-container.dark .video-placeholder {
+    background: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .live-container.dark .chat-message.received {
+    background: #333;
+    color: #fff;
+  }
+  
+  .live-container.dark .chat-message.sent {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .live-container.dark .chat-message small {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .live-container.dark .input-field {
+    background: #2D2D2D;
+    color: #b0b0b0; /* Light grey */
+    border-color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .live-container.dark .no-stream {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .live-container {
+      padding: 10px;
+    }
+  
+    .profile-photo {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .go-live-input {
+      height: 40px;
+      padding: 0.8rem 7rem 0.8rem 1.2rem;
+      font-size: 1rem;
+    }
+  
+    .btn-go-live {
+      padding: 0.6rem 1.2rem;
+    }
+  
+    .video-placeholder {
+      height: 200px;
+    }
+  
+    .chat-messages {
+      max-height: 150px;
+    }
+  }
