@@ -1,0 +1,36 @@
+/* App.css - Update main content positioning */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #fdfdfd;
+  transition: background-color 0.3s ease;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 250px; /* Navbar width */
+  margin-right: 300px; /* Sidebar width */
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1; /* Ensure content stays below fixed elements */
+}
+
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+  .main-content {
+    margin-left: 80px;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+}

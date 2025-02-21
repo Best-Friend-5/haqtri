@@ -1,0 +1,220 @@
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    background: #ffffff; /* Light mode */
+    padding: 1rem;
+    box-shadow: -8px 0 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+  }
+  
+  .sidebar.dark {
+    background: #1A2530; /* Darker Navy */
+    box-shadow: -8px 0 15px rgba(255, 255, 255, 0.05);
+  }
+  
+  .sidebar-search {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    background: #f9e9e4; /* Light Terracotta tint */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .sidebar-search.dark {
+    background: #2D2D2D;
+  }
+  
+  .search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .search-input.dark {
+    color: #fff;
+  }
+  
+  .search-icon {
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .user-profile.dark {
+    background: #2D2D2D;
+  }
+  
+  .profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .profile-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .profile-info p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .dark .profile-info h4 {
+    color: #fff;
+  }
+  
+  .dark .profile-info p {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .quick-actions {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    background: #f9e9e4; /* Light Terracotta tint */
+  }
+  
+  .quick-actions.dark {
+    background: #2D2D2D;
+  }
+  
+  .quick-actions h3 {
+    color: #2A3F54; /* Deep Navy Blue */
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .dark .quick-actions h3 {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .action-btn {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 0.5rem;
+    border: none;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #2A3F54; /* Deep Navy Blue */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .action-btn.dark {
+    background: #333;
+    color: #fff;
+  }
+  
+  .action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(42, 63, 84, 0.2); /* Navy shadow */
+    background: #CC7357; /* Warm Terracotta */
+    color: #ffffff;
+  }
+  
+  .action-icon {
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  .dark .action-icon {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .trending-projects {
+    padding: 1rem;
+    border-radius: 12px;
+    background: #f9e9e4; /* Light Terracotta tint */
+  }
+  
+  .trending-projects.dark {
+    background: #2D2D2D;
+  }
+  
+  .trending-projects h3 {
+    color: #2A3F54; /* Deep Navy Blue */
+    margin-top: 0;
+  }
+  
+  .dark .trending-projects h3 {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .project-card {
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(42, 63, 84, 0.2); /* Navy shadow */
+  }
+  
+  .dark .project-card {
+    background: #333;
+  }
+  
+  .project-info h4 {
+    margin: 0 0 0.3rem 0;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .project-info p {
+    margin: 0;
+    color: #666;
+  }
+  
+  .dark .project-info h4 {
+    color: #fff;
+  }
+  
+  .dark .project-info p {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .eco-badge {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    background: #4A8B6F; /* Earthy Green */
+    color: #ffffff;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  
+  @media (max-width: 1200px) {
+    .sidebar {
+      width: 220px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+    }
+  }

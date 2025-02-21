@@ -1,0 +1,203 @@
+.navbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px; /* Fixed width, unchanged */
+  background: #2A3F54; /* Deep Navy Blue */
+  padding: 1rem; /* Original padding */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 8px 0 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+.navbar.dark {
+  background: #1A2530; /* Darker Navy */
+  box-shadow: 8px 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.navbar-header {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #4A8B6F; /* Earthy Green */
+  margin-bottom: 1rem;
+}
+
+.navbar.dark .navbar-header {
+  border-color: #4A8B6F; /* Earthy Green */
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically within header */
+}
+
+.logo {
+  width: 70px; /* Increased from 50px, fits within 200px width */
+  height: 70px; /* Increased from 50px */
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+}
+
+/* Removed .brand-name styles as it's no longer in use */
+
+.nav-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  color: #ffffff; /* White for contrast */
+  text-decoration: none;
+  transition: all 0.3s ease;
+  gap: 0.8rem;
+}
+
+.nav-item:hover {
+  background: #CC7357; /* Warm Terracotta */
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(42, 63, 84, 0.2); /* Navy shadow */
+}
+
+.nav-item.active {
+  background: #CC7357; /* Warm Terracotta */
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(204, 115, 87, 0.3); /* Terracotta shadow */
+}
+
+.nav-item.active .nav-icon {
+  color: #D4AF37; /* Metallic Gold */
+}
+
+.nav-icon {
+  font-size: 1.1rem;
+  width: 25px;
+  color: #4A8B6F; /* Earthy Green */
+}
+
+.nav-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.navbar.dark .nav-item {
+  color: #b0b0b0; /* Light grey */
+}
+
+.navbar.dark .nav-item:hover {
+  background: #CC7357; /* Warm Terracotta */
+}
+
+.navbar.dark .nav-item.active {
+  background: #CC7357; /* Warm Terracotta */
+}
+
+.navbar-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid #4A8B6F; /* Earthy Green */
+}
+
+.navbar.dark .navbar-footer {
+  border-color: #4A8B6F; /* Earthy Green */
+}
+
+.dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  color: #4A8B6F; /* Earthy Green */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+  background: #CC7357; /* Warm Terracotta */
+  transform: translateX(5px);
+  color: #ffffff;
+}
+
+.navbar.dark .dark-mode-toggle {
+  color: #b0b0b0; /* Light grey */
+}
+
+.navbar.dark .dark-mode-toggle:hover {
+  background: #CC7357; /* Warm Terracotta */
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  color: #4A8B6F; /* Earthy Green */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #CC7357; /* Warm Terracotta */
+  transform: translateX(5px);
+  color: #ffffff;
+}
+
+.navbar.dark .logout-btn {
+  color: #b0b0b0; /* Light grey */
+}
+
+.navbar.dark .logout-btn:hover {
+  background: #CC7357; /* Warm Terracotta */
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    width: 70px; /* Fixed width, unchanged */
+    padding: 0.8rem; /* Original mobile padding */
+  }
+  
+  .logo-container {
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+  
+  .logo {
+    width: 50px; /* Increased from 40px, fits 70px width */
+    height: 50px;
+  }
+  
+  .nav-label,
+  .dark-mode-toggle span,
+  .logout-btn span {
+    display: none; /* Hide text on mobile */
+  }
+  
+  .nav-item {
+    justify-content: center;
+    padding: 1rem 0;
+  }
+  
+  .dark-mode-toggle,
+  .logout-btn {
+    justify-content: center;
+    padding: 1rem 0;
+  }
+}
