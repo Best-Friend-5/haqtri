@@ -23,7 +23,7 @@ const Home = ({ darkMode }) => {
       location: 'Dubai',
       time: '15 MINUTES AGO',
       content: 'Check out my new sustainable home design! 🌿',
-      images: [Feed5, Feed2], // Use imported images
+      images: [Feed5, Feed2],
       likes: 42,
       comments: 8,
       shares: 3,
@@ -70,47 +70,47 @@ const Home = ({ darkMode }) => {
   };
 
   return (
-    <div className={`home-container ${darkMode ? 'dark' : ''}`}>
+    <div className={`home-main-container ${darkMode ? 'home-dark' : ''}`}>
       {/* Fixed Stories Section */}
-      <div className="stories-container">
-        <div className="stories">
-          <div className="story">
-            <div className="profile-photo new-story">
+      <div className="home-stories-container">
+        <div className="home-stories">
+          <div className="home-story">
+            <div className="home-profile-photo home-new-story">
               <img src={Profile8} alt="Your story" />
-              <div className="add-story">+</div>
+              <div className="home-add-story">+</div>
             </div>
-            <p className="name">Your Story</p>
+            <p className="home-name">Your Story</p>
           </div>
           {[Profile11, Profile12, Profile13, Profile14, Profile15].map((profileImg, i) => (
-            <div className="story" key={i}>
-              <div className="profile-photo">
+            <div className="home-story" key={i}>
+              <div className="home-profile-photo">
                 <img src={profileImg} alt={`User ${i + 1}`} />
               </div>
-              <p className="name">User {i + 1}</p>
+              <p className="home-name">User {i + 1}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Enhanced Post Creator */}
-      <form className="post-creator" onSubmit={handlePostSubmit}>
-        <div className="post-author">
-          <img src={Profile1} alt="Profile" className="profile-photo" />
-          <div className="post-input-container">
+      <form className="home-post-creator" onSubmit={handlePostSubmit}>
+        <div className="home-post-author">
+          <img src={Profile1} alt="Profile" className="home-profile-photo" />
+          <div className="home-post-input-container">
             <input
               type="text"
               placeholder="What's on your mind?"
-              className="post-input"
+              className="home-post-input"
               value={newPost}
               onChange={(e) => setNewPost(e.target.value)}
             />
-            <div className="post-buttons">
+            <div className="home-post-buttons">
               <input
                 type="file"
                 accept="image/*"
                 multiple
                 style={{ display: 'none' }}
-                id="image-upload"
+                id="home-image-upload"
                 onChange={(e) => {
                   const files = Array.from(e.target.files);
                   if (files.length > 4) {
@@ -122,15 +122,15 @@ const Home = ({ darkMode }) => {
               />
               <button
                 type="button"
-                className="add-image-btn"
-                onClick={() => document.getElementById('image-upload').click()}
+                className="home-add-image-btn"
+                onClick={() => document.getElementById('home-image-upload').click()}
                 aria-label="Add images"
               >
                 <FaCamera />
               </button>
               <button
                 type="submit"
-                className="btn-post"
+                className="home-btn-post"
                 disabled={!newPost.trim()}
                 aria-label="Post your thought"
               >
@@ -140,58 +140,58 @@ const Home = ({ darkMode }) => {
           </div>
         </div>
         {selectedImages.length > 0 && (
-          <div className="image-previews">
+          <div className="home-image-previews">
             {selectedImages.map((img, i) => (
-              <img key={i} src={img} alt={`Preview ${i + 1}`} className="preview-img" />
+              <img key={i} src={img} alt={`Preview ${i + 1}`} className="home-preview-img" />
             ))}
           </div>
         )}
       </form>
 
       {/* Feed Posts */}
-      <div className="feeds">
+      <div className="home-feeds">
         {posts.map(post => (
-          <div className="feed-card" key={post.id}>
-            <div className="post-header">
-              <div className="post-user">
-                <img src={Profile3} alt={post.user} className="profile-photo" />
-                <div className="post-info">
+          <div className="home-feed-card" key={post.id}>
+            <div className="home-post-header">
+              <div className="home-post-user">
+                <img src={Profile3} alt={post.user} className="home-profile-photo" />
+                <div className="home-post-info">
                   <h3>{post.user}</h3>
                   <small>{post.location}, {post.time}</small>
                 </div>
               </div>
-              <button className="post-options">⋯</button>
+              <button className="home-post-options">⋯</button>
             </div>
-            <div className="post-content">
+            <div className="home-post-content">
               <p>{post.content}</p>
               {post.images.length > 0 && (
-                <div className="post-images">
+                <div className="home-post-images">
                   {post.images.map((img, i) => (
                     <img key={i} src={img} alt={`${post.user}'s post image ${i + 1}`} />
                   ))}
                 </div>
               )}
             </div>
-            <div className="post-interactions">
-              <div className="interaction-buttons">
+            <div className="home-post-interactions">
+              <div className="home-interaction-buttons">
                 <button
-                  className="interaction-btn"
+                  className="home-interaction-btn"
                   onClick={() => handleLike(post.id)}
                   aria-label="Like this post"
                 >
                   <FaHeart />
                   <span>{post.likes}</span>
                 </button>
-                <button className="interaction-btn" aria-label="Comment on this post">
+                <button className="home-interaction-btn" aria-label="Comment on this post">
                   <FaCommentDots />
                   <span>{post.comments}</span>
                 </button>
-                <button className="interaction-btn" aria-label="Share this post">
+                <button className="home-interaction-btn" aria-label="Share this post">
                   <FaShare />
                   <span>{post.shares}</span>
                 </button>
               </div>
-              <button className="bookmark-btn" aria-label="Bookmark this post">
+              <button className="home-bookmark-btn" aria-label="Bookmark this post">
                 <FaBookmark />
               </button>
             </div>
@@ -202,12 +202,12 @@ const Home = ({ darkMode }) => {
       {/* Floating Post Button */}
       {showFloatingButton && (
         <button
-          className={`floating-post-btn ${darkMode ? 'dark' : ''}`}
+          className={`home-floating-post-btn ${darkMode ? 'home-dark' : ''}`}
           onClick={() => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setTimeout(() => {
-              document.querySelector('.post-input').focus();
-            }, 300); // 300ms delay for smooth scroll
+              document.querySelector('.home-post-input').focus();
+            }, 300);
           }}
           aria-label="Go to post input"
         >

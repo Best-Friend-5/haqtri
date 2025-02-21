@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaCity, FaUserPlus, FaEnvelope, FaStar } from 'react-icons/fa';
-import Profile1 from '../images/profpic.jpg'; // Architect profile
+import Profile1 from '../images/profpic3.jpg'; // Architect profile
 import Profile3 from '../images/profpic2.jpg'; // Architect profile
 import './Architect.css';
 
