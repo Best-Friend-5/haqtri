@@ -1,0 +1,281 @@
+/* Define root variables for light mode */
+:root {
+    --primary-color: #2A3F54;      /* Deep Navy Blue for titles and key elements */
+    --secondary-color: #CC7357;     /* Warm Terracotta for buttons */
+    --accent-color: #4A8B6F;       /* Earthy Green for highlights and CTAs */
+    --gold-color: #D4AF37;         /* Metallic Gold for accents */
+    --background-color: #F5F5F5;   /* Light Gray for page background */
+    --card-background: #FFFFFF;    /* White for card backgrounds */
+    --text-color: #2A3F54;         /* Navy Blue for text */
+    --text-muted: #666666;         /* Muted Gray for secondary text */
+    --border-color: #E0E0E0;       /* Light Gray for borders */
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Dark mode variables */
+  .settings-container.dark {
+    --background-color: #1A2530;   /* Darker Navy for background */
+    --card-background: #2D2D2D;    /* Dark Gray for cards */
+    --text-color: #B0B0B0;         /* Light Gray for text */
+    --text-muted: #888888;         /* Muted Gray for secondary text in dark mode */
+    --border-color: #333333;       /* Darker Gray for borders */
+  }
+  
+  /* Base container styling */
+  .settings-container {
+    max-width: 900px;              /* Slightly wider for better spacing */
+    margin: 0 auto;
+    padding: 40px 20px;            /* Increased padding for breathing room */
+    background: var(--background-color);
+    font-family: 'Roboto', sans-serif; /* Modern, readable font */
+    min-height: 100vh;             /* Full height for content */
+  }
+  
+  /* Title styling */
+  .settings-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 28px;               /* Larger for prominence */
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 30px;           /* More space below title */
+  }
+  
+  .cog-icon {
+    color: var(--accent-color);
+    font-size: 28px;               /* Match title size */
+  }
+  
+  /* Grid layout for settings cards */
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;                     /* Increased gap for better separation */
+  }
+  
+  /* Card styling */
+  .settings-card {
+    background: var(--card-background);
+    border-radius: 12px;           /* Slightly larger for modern look */
+    box-shadow: 0 4px 12px var(--shadow-light);
+    padding: 24px;                 /* More internal padding */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .settings-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-dark);
+  }
+  
+  .settings-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;               /* Slightly larger for emphasis */
+    font-weight: 500;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+  }
+  
+  /* Form group styling */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 8px;            /* More space below labels */
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"],
+  .form-group select {
+    width: 100%;
+    padding: 12px;                 /* Increased padding for comfort */
+    border: 1px solid var(--border-color);
+    border-radius: 6px;            /* Softer corners */
+    font-size: 14px;
+    color: var(--text-color);
+    background: var(--card-background);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px rgba(74, 139, 111, 0.3); /* Subtle green glow */
+    outline: none;
+  }
+  
+  .form-group input[type="checkbox"] {
+    margin-right: 12px;
+    accent-color: var(--accent-color); /* Checkbox color */
+  }
+  
+  /* Profile picture preview */
+  .profile-pic-preview {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .profile-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    object-fit: cover;
+  }
+  
+  /* Buttons */
+  .upload-btn,
+  .theme-btn,
+  .delete-btn,
+  .support-btn {
+    background: var(--secondary-color);
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .upload-btn:hover,
+  .theme-btn:hover,
+  .delete-btn:hover,
+  .support-btn:hover {
+    background: var(--button-hover, #B55F43); /* Darker Terracotta */
+    transform: translateY(-2px);
+  }
+  
+  .theme-btn.active {
+    background: var(--accent-color);
+  }
+  
+  .theme-btn.active:hover {
+    background: #3A6F56; /* Darker Green */
+  }
+  
+  .delete-btn {
+    background: #E57373; /* Softer red for deletion */
+  }
+  
+  .delete-btn:hover {
+    background: #D32F2F; /* Darker red */
+  }
+  
+  /* Save button */
+  .save-btn {
+    background: var(--accent-color);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin: 30px auto 0;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .save-btn:hover {
+    background: #3A6F56; /* Darker Green */
+    transform: translateY(-2px);
+  }
+  
+  /* Session list */
+  .session-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .session-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  
+  .session-list button {
+    background: var(--secondary-color);
+    color: #FFFFFF;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s ease;
+  }
+  
+  .session-list button:hover {
+    background: var(--button-hover, #B55F43);
+  }
+  
+  /* Dark mode adjustments */
+  .settings-container.dark {
+    background: var(--background-color);
+  }
+  
+  .settings-container.dark .settings-title,
+  .settings-container.dark .settings-card h3,
+  .settings-container.dark .form-group label {
+    color: var(--text-color);
+  }
+  
+  .settings-container.dark .settings-card {
+    background: var(--card-background);
+    box-shadow: 0 4px 12px var(--shadow-dark);
+  }
+  
+  .settings-container.dark .form-group input[type="text"],
+  .settings-container.dark .form-group input[type="email"],
+  .settings-container.dark .form-group input[type="password"],
+  .settings-container.dark .form-group select {
+    background: var(--card-background);
+    color: var(--text-color);
+    border-color: var(--border-color);
+  }
+  
+  .settings-container.dark .session-list li {
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .settings-container {
+      padding: 20px 10px; /* Reduced padding on mobile */
+    }
+  
+    .settings-grid {
+      grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+  
+    .settings-title {
+      font-size: 24px; /* Slightly smaller on mobile */
+    }
+  
+    .profile-pic-preview {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .save-btn {
+      padding: 10px 20px; /* Slightly smaller on mobile */
+    }
+  }

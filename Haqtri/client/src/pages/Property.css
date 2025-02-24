@@ -1,0 +1,313 @@
+.property-container {
+    max-width: 1200px; /* Wider than Home.js for dual-column layout */
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff; /* Light mode background */
+  }
+  
+  .property-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin-bottom: 20px;
+  }
+  
+  .hotel-icon {
+    color: #4A8B6F; /* Earthy Green */
+  }
+  
+  .property-layout {
+    display: flex;
+    gap: 20px;
+    height: calc(100vh - 100px); /* Adjust for title and padding */
+  }
+  
+  /* Property List */
+  .property-list {
+    width: 400px;
+    overflow-y: auto;
+    border-right: 1px solid #eee;
+  }
+  
+  .property-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .property-item:hover {
+    background: #f9e9e4; /* Light Terracotta tint */
+  }
+  
+  .property-item.active {
+    background: #CC7357; /* Warm Terracotta */
+    color: #ffffff;
+  }
+  
+  .property-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    margin-right: 1rem;
+    object-fit: cover;
+  }
+  
+  .property-info {
+    flex: 1;
+  }
+  
+  .property-info h3 {
+    font-size: 1rem;
+    margin: 0 0 5px;
+    color: #2A3F54; /* Deep Navy Blue */
+  }
+  
+  .property-location {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 3px;
+  }
+  
+  .property-price {
+    font-size: 0.9rem;
+    color: #CC7357; /* Warm Terracotta */
+    margin: 0 0 3px;
+  }
+  
+  .property-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #D4AF37; /* Metallic Gold */
+  }
+  
+  .star-icon {
+    color: #D4AF37; /* Metallic Gold */
+  }
+  
+  .bookmark-btn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+  }
+  
+  .bookmark-btn.active {
+    color: #D4AF37; /* Metallic Gold */
+  }
+  
+  .bookmark-btn:hover {
+    color: #CC7357; /* Warm Terracotta */
+  }
+  
+  /* Property Details */
+  .property-details {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .details-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .details-image {
+    width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+  }
+  
+  .details-card h3 {
+    font-size: 1.5rem;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin: 0 0 0.5rem;
+  }
+  
+  .details-location {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 0.5rem;
+  }
+  
+  .details-price {
+    font-size: 1rem;
+    color: #CC7357; /* Warm Terracotta */
+    margin: 0 0 0.5rem;
+  }
+  
+  .details-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 1rem;
+    color: #D4AF37; /* Metropolitan Gold */
+    margin-bottom: 1rem;
+  }
+  
+  .details-description {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 1rem;
+  }
+  
+  .owner-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .profile-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #2A3F54; /* Deep Navy Blue */
+    padding: 3px;
+  }
+  
+  .profile-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .owner-name {
+    font-size: 1rem;
+    color: #2A3F54; /* Deep Navy Blue */
+    margin: 0 0 0.5rem;
+  }
+  
+  .contact-btn {
+    background: #2A3F54; /* Deep Navy Blue */
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease;
+  }
+  
+  .contact-btn:hover {
+    background: #1f2e3f; /* Darker Navy */
+  }
+  
+  .no-selection {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+  }
+  
+  /* Dark Mode */
+  .property-container.dark {
+    background: #1A2530; /* Darker Navy */
+  }
+  
+  .property-container.dark .property-title {
+    color: #fff;
+  }
+  
+  .property-container.dark .property-item {
+    background: #2D2D2D;
+  }
+  
+  .property-container.dark .property-item:hover {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .property-container.dark .property-item.active {
+    background: #CC7357; /* Warm Terracotta */
+  }
+  
+  .property-container.dark .property-info h3 {
+    color: #fff;
+  }
+  
+  .property-container.dark .property-location,
+  .property-container.dark .property-price {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .property-container.dark .bookmark-btn {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .property-container.dark .bookmark-btn.active {
+    color: #D4AF37; /* Metallic Gold */
+  }
+  
+  .property-container.dark .bookmark-btn:hover {
+    color: #CC7357; /* Warm Terracotta */
+  }
+  
+  .property-container.dark .details-card {
+    background: #2D2D2D;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .property-container.dark .details-card h3,
+  .property-container.dark .owner-name {
+    color: #fff;
+  }
+  
+  .property-container.dark .details-location,
+  .property-container.dark .details-description {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  .property-container.dark .no-selection {
+    color: #b0b0b0; /* Light grey */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .property-container {
+      padding: 10px;
+    }
+  
+    .property-layout {
+      flex-direction: column;
+    }
+  
+    .property-list {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #eee;
+      max-height: 40vh;
+    }
+  
+    .property-image {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .profile-photo {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .details-image {
+      max-height: 150px;
+    }
+  }
