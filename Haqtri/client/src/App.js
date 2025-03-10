@@ -1,8 +1,9 @@
-// App.js
+// client/src/App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+import Auth from './components/Auth'; // Import the Auth component
 import Home from './pages/Home';
 import Explore from './pages/Explore';
 import Notifications from './pages/Notifications';
@@ -20,27 +21,37 @@ function App() {
 
   return (
     <Router>
-      <div className={`app-container ${darkMode ? 'dark' : ''}`}>
-        <Navbar darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
-        
-        <main className="main-content">
-          <Sidebar darkMode={darkMode} />
-          <div className="content-wrapper">
-            <Routes>
-              <Route path="/" element={<Home darkMode={darkMode} />} />
-              <Route path="/explore" element={<Explore darkMode={darkMode} />} />
-              <Route path="/notifications" element={<Notifications darkMode={darkMode} />} />
-              <Route path="/messages" element={<Messages darkMode={darkMode} />} />
-              <Route path="/live" element={<Live darkMode={darkMode} />} />
-              <Route path="/bookmark" element={<Bookmark darkMode={darkMode} />} />
-              <Route path="/analytics" element={<Analytics darkMode={darkMode} />} />
-              <Route path="/architect" element={<Architect darkMode={darkMode} />} />
-              <Route path="/property" element={<Property darkMode={darkMode} />} />
-              <Route path="/settings" element={<Settings darkMode={darkMode} />} />
-            </Routes>
-          </div>
-        </main>
-      </div>
+      <Routes>
+        {/* Auth route without Navbar/Sidebar */}
+        <Route path="/" element={<Auth />} />
+
+        {/* Protected routes with Navbar and Sidebar */}
+        <Route
+          path="/*"
+          element={
+            <div className={`app-container ${darkMode ? 'dark' : ''}`}>
+              <Navbar darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
+              <main className="main-content">
+                <Sidebar darkMode={darkMode} />
+                <div className="content-wrapper">
+                  <Routes>
+                    <Route path="/home" element={<Home darkMode={darkMode} />} />
+                    <Route path="/explore" element={<Explore darkMode={darkMode} />} />
+                    <Route path="/notifications" element={<Notifications darkMode={darkMode} />} />
+                    <Route path="/messages" element={<Messages darkMode={darkMode} />} />
+                    <Route path="/live" element={<Live darkMode={darkMode} />} />
+                    <Route path="/bookmark" element={<Bookmark darkMode={darkMode} />} />
+                    <Route path="/analytics" element={<Analytics darkMode={darkMode} />} />
+                    <Route path="/architect" element={<Architect darkMode={darkMode} />} />
+                    <Route path="/property" element={<Property darkMode={darkMode} />} />
+                    <Route path="/settings" element={<Settings darkMode={darkMode} />} />
+                  </Routes>
+                </div>
+              </main>
+            </div>
+          }
+        />
+      </Routes>
     </Router>
   );
 }

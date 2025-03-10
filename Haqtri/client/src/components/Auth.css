@@ -1,0 +1,388 @@
+/* client/src/components/Auth.css */
+
+/* Define CSS variables for easy theming */
+:root {
+  --bg-color: linear-gradient(to bottom, #e6eef5, #d1dbe8);
+  --form-bg: #ffffff;
+  --text-color: #333333;
+  --accent-color: #007bff;
+  --accent-dark: #0056b3;
+  --grid-color: #e0e0e0;
+  --input-border: #cccccc;
+  --placeholder-color: #999999;
+}
+
+.dark {
+  --bg-color: linear-gradient(to bottom, #1a2633, #2e3b4e);
+  --form-bg: #2c3e50;
+  --text-color: #ecf0f1;
+  --accent-color: #3498db;
+  --accent-dark: #1f618d;
+  --grid-color: #444444;
+  --input-border: #666666;
+  --placeholder-color: #aaaaaa;
+}
+
+/* Page Styling */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg-color);
+  overflow: hidden;
+}
+
+/* Card Styling */
+.auth-card {
+  height: 500px; /* Fixed height */
+  display: flex;
+  background: var(--form-bg);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: fadeIn 0.5s ease;
+  transition: width 0.5s ease-in-out; /* Width transition animation */
+}
+
+.auth-card.signin-width {
+  width: 700px; /* Width for sign-in */
+}
+
+.auth-card.signup-width {
+  width: 900px; /* Wider for sign-up */
+}
+
+/* Image Section */
+.auth-image {
+  flex: 1; /* Default flex for sign-in */
+  background: url('../images/architecture.jpg') center/cover no-repeat; /* Replace with your image */
+  filter: brightness(0.8);
+  transition: flex 0.5s ease-in-out; /* Animate flex change */
+}
+
+.auth-card.signup-width .auth-image {
+  flex: 0 0 200px; /* Reduced width for sign-up only */
+}
+
+/* Form Container */
+.auth-form-container {
+  flex: 1; /* Takes remaining space */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--form-bg);
+  background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  background-size: 20px 20px;
+  padding: 20px;
+}
+
+/* Logo */
+.auth-logo {
+  width: 70px;
+  margin-bottom: 10px;
+}
+
+/* Header */
+.auth-form-container h1 {
+  font-size: 18px;
+  color: var(--text-color);
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.auth-form-container p {
+  font-size: 12px;
+  color: var(--placeholder-color);
+  margin-bottom: 10px;
+}
+
+/* Forms Container */
+.auth-forms {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Fits within 500px card */
+}
+
+/* Form Styling */
+.auth-form {
+  position: absolute;
+  width: 100%;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.login-form {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.signup-form {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.auth-forms.signup .login-form {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.auth-forms.signup .signup-form {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.auth-forms.login .signup-form {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.auth-forms.login .login-form {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Form Row for Sign-Up */
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Form Fields */
+.form-group {
+  position: relative;
+  margin-bottom: 10px;
+  flex: 1; /* Equal width in row */
+}
+
+.input-icon {
+  position: absolute;
+  left: 8px; /* Adjusted to avoid edge */
+  top: 8px;
+  color: var(--placeholder-color);
+  transition: color 0.2s ease;
+}
+
+input {
+  width: 100%;
+  padding: 6px 10px 6px 30px; /* Increased left padding for icon spacing */
+  border: none;
+  border-bottom: 2px solid var(--input-border);
+  background: transparent;
+  font-size: 13px;
+  color: var(--text-color);
+  outline: none;
+  transition: border-bottom-color 0.3s ease;
+}
+
+input:focus {
+  border-bottom-color: var(--accent-color);
+}
+
+input::placeholder {
+  color: transparent; /* Hide placeholder to avoid doubling */
+}
+
+label {
+  position: absolute;
+  top: 6px;
+  left: 30px; /* Aligned with input padding */
+  color: var(--placeholder-color);
+  font-size: 13px;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+input:focus + label,
+input.filled + label {
+  top: -12px;
+  font-size: 9px;
+  color: var(--accent-color);
+}
+
+input:focus ~ .input-icon,
+input.filled ~ .input-icon {
+  color: var(--accent-color);
+}
+
+/* Error Message */
+.error {
+  color: #ff6b6b;
+  font-size: 11px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Buttons */
+.auth-btn {
+  width: 100%;
+  padding: 8px;
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-dark));
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.auth-btn:disabled {
+  background: #999999;
+  cursor: not-allowed;
+}
+
+/* Alternative Methods */
+.alternative-methods {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.alternative-methods p {
+  font-size: 11px;
+  color: var(--placeholder-color);
+  margin-bottom: 6px;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 6px;
+  background: var(--form-bg);
+  color: var(--text-color);
+  border: 1px solid var(--input-border);
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.google-btn:hover:not(:disabled) {
+  background: #f9f9f9;
+  transform: translateY(-2px);
+}
+
+.dark .google-btn:hover:not(:disabled) {
+  background: #3a4a5c;
+}
+
+.google-btn svg {
+  margin-right: 6px;
+}
+
+/* Toggle Text */
+.toggle-text {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--placeholder-color);
+}
+
+.toggle-link {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+}
+
+.toggle-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-card {
+    width: 90%;
+    flex-direction: column;
+    height: auto; /* Allow height to adjust on small screens */
+  }
+
+  .auth-card.signin-width,
+  .auth-card.signup-width {
+    width: 90%; /* Consistent width on small screens */
+  }
+
+  .auth-image,
+  .auth-card.signup-width .auth-image {
+    height: 150px; /* Fixed height on small screens */
+  }
+
+  .auth-form-container {
+    padding: 15px;
+  }
+
+  .auth-forms {
+    height: auto; /* Dynamic height */
+  }
+
+  .auth-form {
+    position: relative;
+  }
+
+  .auth-forms.signup .login-form,
+  .auth-forms.login .signup-form {
+    display: none; /* Hide instead of sliding on small screens */
+  }
+
+  .auth-forms.signup .signup-form,
+  .auth-forms.login .login-form {
+    position: static;
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .form-row {
+    flex-direction: column; /* Stack fields on small screens */
+    gap: 5px;
+  }
+}
+
+/* Add to C:\Users\Abz\Downloads\Haqtri\Haqtri\client\src\components\Auth.css */
+
+/* Success Message */
+.success {
+  color: #28a745;
+  font-size: 11px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Adjust form-row for better spacing with two name fields */
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Ensure inputs in form-row are balanced */
+.form-row .form-group {
+  flex: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
