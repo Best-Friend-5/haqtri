@@ -1,24 +1,16 @@
-// C:\Users\Abz\Downloads\Haqtri\Haqtri\client\src\pages\Home.js
 import React, { useState, useEffect } from 'react';
 import { FaHeart, FaCommentDots, FaShare, FaBookmark, FaEdit, FaCamera } from 'react-icons/fa';
 import axios from 'axios';
 
-// Import images
-import Profile1 from '../images/profpic.jpg'; // Default post creator profile
-import Profile3 from '../images/profpic2.jpg'; // Default feed post profile
-import Profile8 from '../images/house1.jpg'; // Default story profile
-import Profile11 from '../images/house2.png';
-import Profile12 from '../images/house3.jpg';
-import Profile13 from '../images/house4.jpg';
-import Profile14 from '../images/house5.jpg';
-import Profile15 from '../images/house6.jpg';
+import Profile3 from '../images/profpic2.jpg';
+import Profile8 from '../images/house1.jpg';
 import Feed5 from '../images/house2.png';
 import Feed2 from '../images/house5.jpg';
 
 import './Home.css';
 
 const Home = ({ darkMode }) => {
-  const [user, setUser] = useState(null); // Logged-in user data
+  const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
@@ -27,10 +19,35 @@ const Home = ({ darkMode }) => {
   const [error, setError] = useState(null);
   const [stories, setStories] = useState([]);
 
-  const API_BASE_URL = 'http://localhost:5001/api'; // Match your server port
+  const API_BASE_URL = 'http://localhost:5001/api';
+  const SERVER_BASE_URL = 'http://localhost:5001';
   const token = localStorage.getItem('token');
 
-  // Fetch user data, posts, and stories on mount
+  // Function to generate a letter-based avatar
+  const generateAvatar = (name) => {
+    if (!name) return Profile3; // Fallback if no name
+    const firstLetter = name.charAt(0).toUpperCase();
+    const canvas = document.createElement('canvas');
+    canvas.width = 70;
+    canvas.height = 70;
+    const ctx = canvas.getContext('2d');
+    
+    // Background color based on letter (simple hash)
+    const colors = ['#4A8B6F', '#CC7357', '#2A3F54', '#D4AF37'];
+    const colorIndex = firstLetter.charCodeAt(0) % colors.length;
+    ctx.fillStyle = colors[colorIndex];
+    ctx.fillRect(0, 0, 70, 70);
+    
+    // Letter
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 40px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(firstLetter, 35, 40);
+    
+    return canvas.toDataURL();
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -40,7 +57,7 @@ const Home = ({ darkMode }) => {
         setUser(response.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch user data');
-        setUser({ first_name: 'Guest', last_name: '', profile_picture_url: Profile1 });
+        setUser({ first_name: 'Guest', last_name: '' });
       }
     };
 
@@ -50,14 +67,37 @@ const Home = ({ darkMode }) => {
         const response = await axios.get(`${API_BASE_URL}/posts`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setPosts(response.data);
+        console.log('fetchPosts raw response:', JSON.stringify(response.data, null, 2));
+        const transformedPosts = response.data.map(post => {
+          let mediaPath = post.media_path;
+          if (typeof mediaPath === 'string') {
+            try {
+              mediaPath = JSON.parse(mediaPath);
+            } catch (e) {
+              console.error(`Error parsing media_path for post ${post.post_id}:`, e);
+              mediaPath = [];
+            }
+          }
+          const normalizedMediaPath = Array.isArray(mediaPath)
+            ? mediaPath.map(img => `${SERVER_BASE_URL}${img}`)
+            : [];
+          console.log(`Post ${post.post_id} transformed media_path:`, normalizedMediaPath);
+          return {
+            ...post,
+            media_path: normalizedMediaPath,
+            user_image: post.user_image || generateAvatar(post.user.split(' ')[0]),
+          };
+        });
+        console.log('Setting posts:', JSON.stringify(transformedPosts, null, 2));
+        setPosts(transformedPosts);
       } catch (err) {
+        console.error('Fetch posts error:', err.response?.data || err.message);
         setError(err.response?.data?.message || 'Failed to fetch posts');
         setPosts([
           {
             post_id: 1,
             user: 'Adam Rose',
-            user_image: Profile3,
+            user_image: generateAvatar('Adam'),
             location: 'Dubai',
             time: '15 MINUTES AGO',
             content: 'Check out my new sustainable home design! 🌿',
@@ -80,14 +120,7 @@ const Home = ({ darkMode }) => {
         setStories(response.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch stories');
-        setStories([
-          { id: 0, image: Profile8, name: 'Your Story', isOwn: true },
-          { id: 1, image: Profile11, name: 'User 1' }, // Fixed syntax error
-          { id: 2, image: Profile12, name: 'User 2' },
-          { id: 3, image: Profile13, name: 'User 3' },
-          { id: 4, image: Profile14, name: 'User 4' },
-          { id: 5, image: Profile15, name: 'User 5' },
-        ]);
+        setStories([{ id: 0, image: Profile8, name: 'Your Story', isOwn: true }]);
       }
     };
 
@@ -97,7 +130,7 @@ const Home = ({ darkMode }) => {
       fetchStories();
     } else {
       setError('Please sign in to view this page');
-      setUser({ first_name: 'Guest', last_name: '', profile_picture_url: Profile1 });
+      setUser({ first_name: 'Guest', last_name: '' });
     }
 
     const handleScroll = () => setShowFloatingButton(window.scrollY > 200);
@@ -105,13 +138,67 @@ const Home = ({ darkMode }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [token]);
 
-  // Interaction handlers
+  const handlePostSubmit = async (e) => {
+    e.preventDefault();
+    if (!newPost.trim() || loading) return;
+
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('content', newPost);
+    formData.append('visibility', 'public');
+    selectedImages.forEach((img) => formData.append('images', img));
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/posts`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Post response:', JSON.stringify(response.data, null, 2));
+      const newPostData = {
+        ...response.data.post,
+        media_path: (response.data.post.media_path || []).map(img => `${SERVER_BASE_URL}${img}`),
+        user_image: response.data.post.user_image || generateAvatar(response.data.post.user.split(' ')[0]),
+      };
+      console.log('New post transformed media_path:', newPostData.media_path);
+      setPosts([newPostData, ...posts]);
+      setNewPost('');
+      setSelectedImages([]);
+    } catch (err) {
+      console.error('Post error:', err.response?.data || err.message);
+      setError(err.response?.data?.message || 'Failed to create post');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddStory = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/users/stories`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setStories([response.data.story, ...stories]);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to add story');
+    }
+  };
+
   const handleLike = async (postId) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/posts/${postId}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setPosts(posts.map(post =>
+      setPosts(posts.map(post => 
         post.post_id === postId ? { ...post, likes: response.data.likes } : post
       ));
     } catch (err) {
@@ -119,16 +206,16 @@ const Home = ({ darkMode }) => {
     }
   };
 
-  const handleComment = async (postId, commentText) => {
+  const handleComment = async (postId, comment) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/posts/${postId}/comment`, { content: commentText }, {
+      const response = await axios.post(`${API_BASE_URL}/posts/${postId}/comment`, { content: comment }, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setPosts(posts.map(post =>
+      setPosts(posts.map(post => 
         post.post_id === postId ? { ...post, comments: response.data.comments } : post
       ));
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to add comment');
+      setError(err.response?.data?.message || 'Failed to comment');
     }
   };
 
@@ -137,7 +224,7 @@ const Home = ({ darkMode }) => {
       const response = await axios.post(`${API_BASE_URL}/posts/${postId}/share`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setPosts(posts.map(post =>
+      setPosts(posts.map(post => 
         post.post_id === postId ? { ...post, shares: response.data.shares } : post
       ));
     } catch (err) {
@@ -155,84 +242,23 @@ const Home = ({ darkMode }) => {
     }
   };
 
-  // Post submission
-  const handlePostSubmit = async (e) => {
-    e.preventDefault();
-    if (!newPost.trim() || !user) return;
-
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('content', newPost);
-      formData.append('location', 'Your Location'); // Could fetch from user data
-      formData.append('visibility', 'public');
-      selectedImages.forEach((file, index) => formData.append(`images[${index}]`, file));
-
-      const response = await axios.post(`${API_BASE_URL}/posts`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      setPosts([response.data.post, ...posts]);
-      setNewPost('');
-      setSelectedImages([]);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to create post');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Add story
-  const handleAddStory = async (e) => {
-    const file = e.target.files[0];
-    if (!file || !user) return;
-
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('image', file);
-
-      const response = await axios.post(`${API_BASE_URL}/users/stories`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      setStories([response.data.story, ...stories.filter(story => !story.isOwn)]);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to add story');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (!user) return <div>Loading...</div>;
-
   return (
     <div className={`home-main-container ${darkMode ? 'home-dark' : ''}`}>
-      {/* Welcome Header */}
-
       {/* Stories Section */}
       <div className="home-stories-container">
         <div className="home-stories">
           <div className="home-story">
             <div className="home-profile-photo home-new-story">
-              <img src={user.profile_picture_url || Profile8} alt="Your story" />
+              <img src={user?.profile_picture_url || generateAvatar(user?.first_name)} alt="Your story" />
               <div className="home-add-story">
                 <input
                   type="file"
                   accept="image/*"
-                  style={{ display: 'none' }}
                   id="home-story-upload"
                   onChange={handleAddStory}
-                  disabled={loading}
+                  style={{ display: 'none' }}
                 />
-                <label htmlFor="home-story-upload" className="home-add-story-label">+</label>
+                <label htmlFor="home-story-upload">+</label>
               </div>
             </div>
             <p className="home-name">Your Story</p>
@@ -251,48 +277,28 @@ const Home = ({ darkMode }) => {
       {/* Post Creator */}
       <form className="home-post-creator" onSubmit={handlePostSubmit}>
         <div className="home-post-author">
-          <img src={user.profile_picture_url || Profile1} alt="Profile" className="home-profile-photo" />
+          <img src={user?.profile_picture_url || generateAvatar(user?.first_name)} alt="Profile" className="home-profile-photo" />
           <div className="home-post-input-container">
             <input
               type="text"
-              placeholder={`What's on your mind, ${user.first_name}?`}
+              placeholder={`What's on your mind, ${user?.first_name || 'Guest'}?`}
               className="home-post-input"
               value={newPost}
               onChange={(e) => setNewPost(e.target.value)}
-              disabled={loading}
             />
             <div className="home-post-buttons">
               <input
                 type="file"
                 accept="image/*"
                 multiple
-                style={{ display: 'none' }}
                 id="home-image-upload"
-                onChange={(e) => {
-                  const files = Array.from(e.target.files);
-                  if (files.length > 4) {
-                    alert('Maximum 4 images allowed');
-                    return;
-                  }
-                  setSelectedImages(files);
-                }}
-                disabled={loading}
+                style={{ display: 'none' }}
+                onChange={(e) => setSelectedImages(Array.from(e.target.files).slice(0, 4))}
               />
-              <button
-                type="button"
-                className="home-add-image-btn"
-                onClick={() => document.getElementById('home-image-upload').click()}
-                aria-label="Add images"
-                disabled={loading}
-              >
+              <button type="button" className="home-add-image-btn" onClick={() => document.getElementById('home-image-upload').click()}>
                 <FaCamera />
               </button>
-              <button
-                type="submit"
-                className="home-btn-post"
-                disabled={!newPost.trim() || loading}
-                aria-label="Post your thought"
-              >
+              <button type="submit" className="home-btn-post" disabled={!newPost.trim() || loading}>
                 {loading ? 'Posting...' : 'Post'}
               </button>
             </div>
@@ -301,100 +307,64 @@ const Home = ({ darkMode }) => {
         {selectedImages.length > 0 && (
           <div className="home-image-previews">
             {selectedImages.map((img, i) => (
-              <img key={i} src={URL.createObjectURL(img)} alt={`Preview ${i + 1}`} className="home-preview-img" />
+              <img key={i} src={URL.createObjectURL(img)} alt={`Preview ${i}`} className="home-preview-img" />
             ))}
           </div>
         )}
         {error && <p className="home-error">{error}</p>}
       </form>
 
-      {/* Feed Posts */}
+      {/* Posts Feed */}
       <div className="home-feeds">
-        {loading && !posts.length ? (
-          <p>Loading posts...</p>
-        ) : posts.length > 0 ? (
-          posts.map(post => (
-            <div className="home-feed-card" key={post.post_id}>
-              <div className="home-post-header">
-                <div className="home-post-user">
-                  <img src={post.user_image || Profile3} alt={post.user} className="home-profile-photo" />
-                  <div className="home-post-info">
-                    <h3>{post.user}</h3>
-                    <small>{post.location || 'Unknown'}, {post.time || new Date(post.created_at).toLocaleString()}</small>
-                  </div>
+        {posts.map(post => (
+          <div className="home-feed-card" key={post.post_id}>
+            <div className="home-post-header">
+              <div className="home-post-user">
+                <img src={post.user_image} alt={post.user} className="home-profile-photo" />
+                <div className="home-post-info">
+                  <h3>{post.user}</h3>
+                  <small>{post.location}, {post.time}</small>
                 </div>
-                <button className="home-post-options">⋯</button>
               </div>
-              <div className="home-post-content">
-                <p>{post.content}</p>
-                {post.media_path && post.media_path.length > 0 && (
-                  <div className="home-post-images">
-                    {post.media_path.map((img, i) => (
-                      <img key={i} src={img} alt={`${post.user}'s post image ${i + 1}`} />
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="home-post-interactions">
-                <div className="home-interaction-buttons">
-                  <button
-                    className="home-interaction-btn"
-                    onClick={() => handleLike(post.post_id)}
-                    aria-label="Like this post"
-                  >
-                    <FaHeart />
-                    <span>{post.likes || 0}</span>
-                  </button>
-                  <button
-                    className="home-interaction-btn"
-                    onClick={() => {
-                      const comment = prompt('Enter your comment:');
-                      if (comment) handleComment(post.post_id, comment);
-                    }}
-                    aria-label="Comment on this post"
-                  >
-                    <FaCommentDots />
-                    <span>{post.comments || 0}</span>
-                  </button>
-                  <button
-                    className="home-interaction-btn"
-                    onClick={() => handleShare(post.post_id)}
-                    aria-label="Share this post"
-                  >
-                    <FaShare />
-                    <span>{post.shares || 0}</span>
-                  </button>
-                </div>
-                <button
-                  className="home-bookmark-btn"
-                  onClick={() => handleBookmark(post.post_id)}
-                  aria-label="Bookmark this post"
-                >
-                  <FaBookmark />
-                </button>
-              </div>
+              <button className="home-post-options">⋯</button>
             </div>
-          ))
-        ) : (
-          <p>No posts found.</p>
-        )}
+            <div className="home-post-content">
+              <p>{post.content}</p>
+              {post.media_path?.length > 0 && (
+                <div className="home-post-images">
+                  {post.media_path.map((img, i) => (
+                    <img 
+                      key={i} 
+                      src={img} 
+                      alt={`Post ${i}`} 
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = Feed5;
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="home-post-interactions">
+              <button onClick={() => handleLike(post.post_id)} className="home-interaction-btn">
+                <FaHeart /> {post.likes}
+              </button>
+              <button onClick={() => handleComment(post.post_id, prompt('Enter comment:'))} className="home-interaction-btn">
+                <FaCommentDots /> {post.comments}
+              </button>
+              <button onClick={() => handleShare(post.post_id)} className="home-interaction-btn">
+                <FaShare /> {post.shares}
+              </button>
+              <button onClick={() => handleBookmark(post.post_id)} className="home-bookmark-btn">
+                <FaBookmark />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
-
-      {/* Floating Post Button */}
-      {showFloatingButton && (
-        <button
-          className={`home-floating-post-btn ${darkMode ? 'home-dark' : ''}`}
-          onClick={() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            setTimeout(() => document.querySelector('.home-post-input').focus(), 300);
-          }}
-          aria-label="Go to post input"
-        >
-          <FaEdit />
-        </button>
-      )}
     </div>
   );
 };
 
-export default Home;     
+export default Home;

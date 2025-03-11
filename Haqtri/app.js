@@ -8,34 +8,36 @@ const { errorHandler } = require('./middleware/errorHandler');
 const app = express();
 
 // Middleware setup
-app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // Restrict to frontend origin
-app.use(bodyParser.json()); // Parse JSON request bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
-app.use(passport.initialize()); // Initialize Passport for Google OAuth
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
 
-// Serve static files (e.g., images)
+// Serve static files
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Mount routes
-app.use('/api/auth', require('./routes/auth')); // Authentication routes
-app.use('/api/users', require('./routes/users')); // User management routes (single mount)
-app.use('/api/properties', require('./routes/properties')); // Property management routes
-app.use('/api/architects', require('./routes/architects')); // Architect management routes
-app.use('/api/settings', require('./routes/settings')); // Settings management routes
-app.use('/api/notifications', require('./routes/notifications')); // Notification preferences routes
-app.use('/api/posts', require('./routes/posts')); // Posts management routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/properties', require('./routes/properties'));
+app.use('/api/architects', require('./routes/architects'));
+app.use('/api/settings', require('./routes/settings'));
+app.use('/api/notifications', require('./routes/notifications'));
+app.use('/api/posts', require('./routes/posts'));
+app.use('/api/stories', require('./routes/stories')); // Added for stories
 
 // Health check route
 app.get('/health', (req, res) => {
   res.status(200).json({ message: 'Server is healthy', uptime: process.uptime() });
 });
 
-// Handle 404 errors (routes not found)
+// Handle 404 errors
 app.use((req, res, next) => {
   res.status(404).json({ message: `Route ${req.method} ${req.path} not found` });
 });
 
-// Centralized error handling middleware (must be last)
+// Centralized error handling middleware
 app.use(errorHandler);
 
 module.exports = app;

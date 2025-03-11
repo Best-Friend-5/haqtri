@@ -1,15 +1,6 @@
-// server/controllers/postController.js
+// C:\Users\Abz\Downloads\Haqtri\Haqtri\server\controllers\postController.js
 const { Posts, User, Likes, Comments, Bookmark, Stories } = require('../models');
-const multer = require('multer');
-const path = require('path');
-
-const API_BASE_URL = 'http://localhost:5001'; // Updated to match server port
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
-});
-const upload = multer({ storage }).array('images', 4);
+const API_BASE_URL = 'http://localhost:5001';
 
 const getPosts = async (req, res) => {
   try {
@@ -26,20 +17,38 @@ const getPosts = async (req, res) => {
       order: [['created_at', 'DESC']],
     });
 
-    const formattedPosts = posts.map(post => ({
-      post_id: post.post_id,
-      user: `${post.user.first_name} ${post.user.last_name}`,
-      user_image: post.user.profile_picture_url ? `${API_BASE_URL}${post.user.profile_picture_url}` : '/images/profpic2.jpg',
-      verified: post.user.verified,
-      country_code: post.user.country_code,
-      location: post.location || post.user.city || 'Unknown',
-      time: post.created_at,
-      content: post.content,
-      media_path: post.media_path ? JSON.parse(post.media_path) : [],
-      likes: post.likes || 0,
-      comments: post.comments || 0,
-      shares: post.shares || 0,
-    }));
+    const formattedPosts = posts.map(post => {
+      let mediaPath;
+      try {
+        // Parse media_path from JSON string to array
+        mediaPath = post.media_path ? JSON.parse(post.media_path) : [];
+      } catch (e) {
+        console.error(`Error parsing media_path for post ${post.post_id}:`, e);
+        mediaPath = [];
+      }
+      console.log(`Post ${post.post_id} raw media_path from DB:`, post.media_path);
+      console.log(`Post ${post.post_id} parsed media_path:`, mediaPath);
+
+      const formattedPost = {
+        post_id: post.post_id,
+        user: `${post.user.first_name} ${post.user.last_name}`,
+        user_image: post.user.profile_picture_url 
+          ? `${API_BASE_URL}${post.user.profile_picture_url}` 
+          : '/images/profpic2.jpg',
+        verified: post.user.verified,
+        country_code: post.user.country_code,
+        location: post.user.city || 'Unknown',
+        time: post.created_at,
+        content: post.content,
+        media_path: mediaPath, // Send as array
+        likes: post.likes || 0,
+        comments: post.comments || 0,
+        shares: post.shares || 0,
+      };
+      return formattedPost;
+    });
+
+    console.log('Sending formatted posts:', JSON.stringify(formattedPosts, null, 2));
     res.status(200).json(formattedPosts);
   } catch (err) {
     console.error('Error fetching posts:', err);
@@ -48,47 +57,63 @@ const getPosts = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  upload(req, res, async (err) => {
-    if (err) return res.status(400).json({ message: 'Image upload failed' });
+  try {
+    console.log('Request body:', req.body);
+    console.log('Uploaded files:', req.files);
 
-    try {
-      const { content, location, visibility } = req.body;
-      const images = req.files ? req.files.map(file => `${API_BASE_URL}/uploads/${file.filename}`) : [];
+    const { content, visibility } = req.body;
+    const images = req.files && req.files.images 
+      ? (Array.isArray(req.files.images) 
+          ? req.files.images 
+          : [req.files.images]).map(file => `/uploads/${file.filename}`) 
+      : [];
 
-      const user = await User.findByPk(req.user.id);
-      const post = await Posts.create({
-        user_id: req.user.id,
-        content,
-        media_path: images.length ? JSON.stringify(images) : null,
-        location: location || user.city || 'Unknown',
-        visibility: visibility || 'public',
-        created_at: new Date(),
-        likes: 0,
-        comments: 0,
-        shares: 0,
-      });
-
-      res.status(201).json({
-        post: {
-          post_id: post.post_id,
-          user: `${user.first_name} ${user.last_name}`,
-          user_image: user.profile_picture_url ? `${API_BASE_URL}${user.profile_picture_url}` : '/images/profpic2.jpg',
-          verified: user.verified,
-          country_code: user.country_code,
-          location: post.location,
-          time: post.created_at,
-          content: post.content,
-          media_path: images,
-          likes: post.likes,
-          comments: post.comments,
-          shares: post.shares,
-        },
-      });
-    } catch (err) {
-      console.error('Error creating post:', err);
-      res.status(500).json({ message: err.message });
+    if (!content) {
+      console.log('Content missing, rejecting request');
+      return res.status(400).json({ message: 'Content is required' });
     }
-  });
+
+    const user = await User.findByPk(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const post = await Posts.create({
+      user_id: req.user.id,
+      content,
+      media_path: images.length ? JSON.stringify(images) : null,
+      visibility: visibility || 'public',
+      created_at: new Date(),
+      likes: 0,
+      comments: 0,
+      shares: 0,
+    });
+
+    console.log('Post created with media_path:', post.media_path);
+    console.log('Response media_path:', images);
+
+    res.status(201).json({
+      post: {
+        post_id: post.post_id,
+        user: `${user.first_name} ${user.last_name}`,
+        user_image: user.profile_picture_url 
+          ? `${API_BASE_URL}${user.profile_picture_url}` 
+          : '/images/profpic2.jpg',
+        verified: user.verified,
+        country_code: user.country_code,
+        location: user.city || 'Unknown',
+        time: post.created_at,
+        content: post.content,
+        media_path: images, // Send as array
+        likes: post.likes,
+        comments: post.comments,
+        shares: post.shares,
+      },
+    });
+  } catch (err) {
+    console.error('Error creating post:', err.name, err.message, err.stack);
+    res.status(500).json({ message: err.message });
+  }
 };
 
 const likePost = async (req, res) => {
@@ -187,7 +212,9 @@ const getStories = async (req, res) => {
       id: story.story_id,
       image: `${API_BASE_URL}${story.image_path}`,
       name: `${story.user.first_name} ${story.user.last_name}`,
-      image_profile: story.user.profile_picture_url ? `${API_BASE_URL}${story.user.profile_picture_url}` : '/images/profpic2.jpg',
+      image_profile: story.user.profile_picture_url 
+        ? `${API_BASE_URL}${story.user.profile_picture_url}` 
+        : '/images/profpic2.jpg',
       verified: story.user.verified,
       isOwn: story.user_id === req.user.id,
     }));
@@ -196,7 +223,9 @@ const getStories = async (req, res) => {
       const user = await User.findByPk(req.user.id);
       formattedStories.unshift({ 
         id: 0, 
-        image: user.profile_picture_url ? `${API_BASE_URL}${user.profile_picture_url}` : '/images/profpic2.jpg', 
+        image: user.profile_picture_url 
+          ? `${API_BASE_URL}${user.profile_picture_url}` 
+          : '/images/profpic2.jpg', 
         name: 'Your Story', 
         verified: user.verified,
         isOwn: true 
@@ -210,34 +239,38 @@ const getStories = async (req, res) => {
 };
 
 const createStory = async (req, res) => {
-  upload(req, res, async (err) => {
-    if (err) return res.status(400).json({ message: 'Image upload failed' });
-    try {
-      const image = req.files && req.files[0] ? `/uploads/${req.files[0].filename}` : null;
-      if (!image) return res.status(400).json({ message: 'Image required' });
+  try {
+    console.log('Request body:', req.body);
+    console.log('Uploaded files:', req.files);
 
-      const user = await User.findByPk(req.user.id);
-      const story = await Stories.create({
-        user_id: req.user.id,
-        image_path: image,
-        created_at: new Date(),
-      });
-
-      res.status(201).json({
-        story: {
-          id: story.story_id,
-          image: `${API_BASE_URL}${image}`,
-          name: `${user.first_name} ${user.last_name}`,
-          image_profile: user.profile_picture_url ? `${API_BASE_URL}${user.profile_picture_url}` : '/images/profpic2.jpg',
-          verified: user.verified,
-          isOwn: true,
-        },
-      });
-    } catch (err) {
-      console.error('Error creating story:', err);
-      res.status(500).json({ message: err.message });
+    const image = req.files && req.files.image ? `/uploads/${req.files.image[0].filename}` : null;
+    if (!image) {
+      return res.status(400).json({ message: 'Image required' });
     }
-  });
+
+    const user = await User.findByPk(req.user.id);
+    const story = await Stories.create({
+      user_id: req.user.id,
+      image_path: image,
+      created_at: new Date(),
+    });
+
+    res.status(201).json({
+      story: {
+        id: story.story_id,
+        image: `${API_BASE_URL}${image}`,
+        name: `${user.first_name} ${user.last_name}`,
+        image_profile: user.profile_picture_url 
+          ? `${API_BASE_URL}${user.profile_picture_url}` 
+          : '/images/profpic2.jpg',
+        verified: user.verified,
+        isOwn: true,
+      },
+    });
+  } catch (err) {
+    console.error('Error creating story:', err);
+    res.status(500).json({ message: err.message });
+  }
 };
 
 module.exports = { getPosts, createPost, likePost, commentPost, sharePost, bookmarkPost, getStories, createStory };
