@@ -9,11 +9,11 @@ import Explore from './pages/Explore';
 import Notifications from './pages/Notifications';
 import Messages from './pages/Messages';
 import Live from './pages/Live';
-import Bookmark from './pages/Bookmark';
 import Analytics from './pages/Analytics';
-import Architect from './pages/Architect';
 import Property from './pages/Property';
 import Settings from './pages/Settings';
+import Marketplace from './pages/Marketplace'; // Import Marketplace
+import Profile from './pages/Profile'; // Placeholder for Profile page
 import './App.css';
 
 function App() {
@@ -36,14 +36,14 @@ function App() {
                 <div className="content-wrapper">
                   <Routes>
                     <Route path="/home" element={<Home darkMode={darkMode} />} />
-                    <Route path="/explore" element={<Explore darkMode={darkMode} />} />
-                    <Route path="/notifications" element={<Notifications darkMode={darkMode} />} />
-                    <Route path="/messages" element={<Messages darkMode={darkMode} />} />
-                    <Route path="/live" element={<Live darkMode={darkMode} />} />
-                    <Route path="/bookmark" element={<Bookmark darkMode={darkMode} />} />
-                    <Route path="/analytics" element={<Analytics darkMode={darkMode} />} />
-                    <Route path="/architect" element={<Architect darkMode={darkMode} />} />
+                    <Route path="/profile" element={<Profile darkMode={darkMode} />} /> {/* Added Profile */}
                     <Route path="/property" element={<Property darkMode={darkMode} />} />
+                    <Route path="/marketplace" element={<Marketplace darkMode={darkMode} />} /> {/* Replaced Bookmark */}
+                    <Route path="/explore" element={<Explore darkMode={darkMode} />} />
+                    <Route path="/live" element={<Live darkMode={darkMode} />} />
+                    <Route path="/messages" element={<Messages darkMode={darkMode} />} />
+                    <Route path="/notifications" element={<Notifications darkMode={darkMode} />} />
+                    <Route path="/analytics" element={<Analytics darkMode={darkMode} />} />
                     <Route path="/settings" element={<Settings darkMode={darkMode} />} />
                   </Routes>
                 </div>

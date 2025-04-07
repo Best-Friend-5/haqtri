@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaVideo, FaBell, FaCommentDots, FaTv, FaBookmark, FaChartLine, FaCity, FaHotel, FaCog } from 'react-icons/fa';
+import { FaHome, FaUser, FaVideo, FaBell, FaCommentDots, FaTv, FaShoppingCart, FaChartLine, FaHotel, FaCog } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import Logo from './logo.png'; // Import the image (adjust path as needed)
 import './Navbar.css';
@@ -8,14 +8,14 @@ import './Navbar.css';
 const Navbar = ({ darkMode, toggleDarkMode }) => {
   const navItems = [
     { icon: <FaHome />, label: 'Home', path: '/' },
-    { icon: <FaVideo />, label: 'Explore', path: '/explore' },
-    { icon: <FaBell />, label: 'Notifications', path: '/notifications' },
-    { icon: <FaCommentDots />, label: 'Messages', path: '/messages' },
-    { icon: <FaTv />, label: 'Live', path: '/live' },
-    { icon: <FaBookmark />, label: 'Bookmark', path: '/bookmark' },
-    { icon: <FaChartLine />, label: 'Analytics', path: '/analytics' },
-    { icon: <FaCity />, label: 'Architect', path: '/architect' },
+    { icon: <FaUser />, label: 'Profile', path: '/profile' }, // Added Profile
     { icon: <FaHotel />, label: 'Property', path: '/property' },
+    { icon: <FaShoppingCart />, label: 'Marketplace', path: '/marketplace' }, // Replaced Bookmark
+    { icon: <FaVideo />, label: 'Explore', path: '/explore' },
+    { icon: <FaTv />, label: 'Live', path: '/live' },
+    { icon: <FaCommentDots />, label: 'Messages', path: '/messages' },
+    { icon: <FaBell />, label: 'Notifications', path: '/notifications' },
+    { icon: <FaChartLine />, label: 'Analytics', path: '/analytics' },
     { icon: <FaCog />, label: 'Settings', path: '/settings' },
   ];
 

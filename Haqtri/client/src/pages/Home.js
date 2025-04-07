@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FaHeart, FaCommentDots, FaShare, FaBookmark, FaEdit, FaCamera } from 'react-icons/fa';
+import { FaHeart, FaCommentDots, FaShare, FaBookmark, FaCamera } from 'react-icons/fa';
 import axios from 'axios';
 
 import Profile3 from '../images/profpic2.jpg';
-import Profile8 from '../images/house1.jpg';
 import Feed5 from '../images/house2.png';
 import Feed2 from '../images/house5.jpg';
 
@@ -18,34 +17,44 @@ const Home = ({ darkMode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [stories, setStories] = useState([]);
+  const [selectedStory, setSelectedStory] = useState(null);
 
   const API_BASE_URL = 'http://localhost:5001/api';
   const SERVER_BASE_URL = 'http://localhost:5001';
   const token = localStorage.getItem('token');
 
-  // Function to generate a letter-based avatar
   const generateAvatar = (name) => {
-    if (!name) return Profile3; // Fallback if no name
-    const firstLetter = name.charAt(0).toUpperCase();
+    const effectiveName = name || 'Guest';
+    const firstLetter = effectiveName.charAt(0).toUpperCase();
     const canvas = document.createElement('canvas');
     canvas.width = 70;
     canvas.height = 70;
     const ctx = canvas.getContext('2d');
-    
-    // Background color based on letter (simple hash)
     const colors = ['#4A8B6F', '#CC7357', '#2A3F54', '#D4AF37'];
     const colorIndex = firstLetter.charCodeAt(0) % colors.length;
     ctx.fillStyle = colors[colorIndex];
     ctx.fillRect(0, 0, 70, 70);
-    
-    // Letter
     ctx.fillStyle = '#FFFFFF';
     ctx.font = 'bold 40px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(firstLetter, 35, 40);
-    
-    return canvas.toDataURL();
+    const avatarUrl = canvas.toDataURL();
+    console.log(`Generated avatar for "${effectiveName}": ${avatarUrl.substring(0, 30)}...`);
+    return avatarUrl;
+  };
+
+  const getProfilePictureUrl = (profilePictureUrl, name) => {
+    if (!profilePictureUrl || profilePictureUrl === '/images/profpic2.jpg') {
+      return generateAvatar(name || 'Guest');
+    }
+    if (!profilePictureUrl.startsWith('http')) {
+      const fullUrl = `${SERVER_BASE_URL}${profilePictureUrl}`;
+      console.log(`Constructed URL for "${name}": ${fullUrl}`);
+      return fullUrl;
+    }
+    console.log(`Using provided URL for "${name}": ${profilePictureUrl}`);
+    return profilePictureUrl;
   };
 
   useEffect(() => {
@@ -54,8 +63,10 @@ const Home = ({ darkMode }) => {
         const response = await axios.get(`${API_BASE_URL}/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log('fetchUserData:', JSON.stringify(response.data, null, 2));
         setUser(response.data);
       } catch (err) {
+        console.error('fetchUserData error:', err.response?.data || err.message);
         setError(err.response?.data?.message || 'Failed to fetch user data');
         setUser({ first_name: 'Guest', last_name: '' });
       }
@@ -67,7 +78,7 @@ const Home = ({ darkMode }) => {
         const response = await axios.get(`${API_BASE_URL}/posts`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log('fetchPosts raw response:', JSON.stringify(response.data, null, 2));
+        console.log('fetchPosts:', JSON.stringify(response.data, null, 2));
         const transformedPosts = response.data.map(post => {
           let mediaPath = post.media_path;
           if (typeof mediaPath === 'string') {
@@ -79,16 +90,14 @@ const Home = ({ darkMode }) => {
             }
           }
           const normalizedMediaPath = Array.isArray(mediaPath)
-            ? mediaPath.map(img => `${SERVER_BASE_URL}${img}`)
+            ? mediaPath.map(img => (img.startsWith('http') ? img : `${SERVER_BASE_URL}${img}`))
             : [];
-          console.log(`Post ${post.post_id} transformed media_path:`, normalizedMediaPath);
           return {
             ...post,
             media_path: normalizedMediaPath,
-            user_image: post.user_image || generateAvatar(post.user.split(' ')[0]),
+            user_image: getProfilePictureUrl(post.user_image, post.user),
           };
         });
-        console.log('Setting posts:', JSON.stringify(transformedPosts, null, 2));
         setPosts(transformedPosts);
       } catch (err) {
         console.error('Fetch posts error:', err.response?.data || err.message);
@@ -117,10 +126,34 @@ const Home = ({ darkMode }) => {
         const response = await axios.get(`${API_BASE_URL}/users/stories`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setStories(response.data);
+        console.log('fetchStories raw response:', JSON.stringify(response.data, null, 2));
+        let transformedStories = response.data.map(story => ({
+          id: story.id,
+          image: getProfilePictureUrl(
+            story.isOwn ? (story.image || story.image_profile) : (story.image_profile || story.image),
+            user?.first_name || story.name
+          ),
+          name: story.name || 'Guest',
+          isOwn: story.isOwn,
+          storyCount: story.storyCount || 1,
+        }));
+        // Ensure "Your Story" placeholder if no own story exists
+        const hasOwnStory = transformedStories.some(story => story.isOwn);
+        if (!hasOwnStory && user) {
+          transformedStories.unshift({
+            id: 0,
+            image: getProfilePictureUrl(user.profile_picture_url, user.first_name),
+            name: user.first_name || 'Guest',
+            isOwn: true,
+            storyCount: 1,
+          });
+        }
+        console.log('transformedStories:', JSON.stringify(transformedStories, null, 2));
+        setStories(transformedStories);
       } catch (err) {
+        console.error('Fetch stories error:', err.response?.data || err.message);
         setError(err.response?.data?.message || 'Failed to fetch stories');
-        setStories([{ id: 0, image: Profile8, name: 'Your Story', isOwn: true }]);
+        setStories([{ id: 0, image: generateAvatar('Guest'), name: 'Your Story', isOwn: true, storyCount: 1 }]);
       }
     };
 
@@ -155,13 +188,11 @@ const Home = ({ darkMode }) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Post response:', JSON.stringify(response.data, null, 2));
       const newPostData = {
         ...response.data.post,
-        media_path: (response.data.post.media_path || []).map(img => `${SERVER_BASE_URL}${img}`),
-        user_image: response.data.post.user_image || generateAvatar(response.data.post.user.split(' ')[0]),
+        media_path: (response.data.post.media_path || []).map(img => (img.startsWith('http') ? img : `${SERVER_BASE_URL}${img}`)),
+        user_image: getProfilePictureUrl(response.data.post.user_image, response.data.post.user),
       };
-      console.log('New post transformed media_path:', newPostData.media_path);
       setPosts([newPostData, ...posts]);
       setNewPost('');
       setSelectedImages([]);
@@ -174,9 +205,14 @@ const Home = ({ darkMode }) => {
   };
 
   const handleAddStory = async (e) => {
+    e.preventDefault();
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file) {
+      console.log('No file selected');
+      return;
+    }
 
+    setLoading(true);
     const formData = new FormData();
     formData.append('image', file);
 
@@ -187,10 +223,29 @@ const Home = ({ darkMode }) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setStories([response.data.story, ...stories]);
+      console.log('Story response:', JSON.stringify(response.data, null, 2));
+      const newStory = {
+        id: response.data.story.id,
+        image: getProfilePictureUrl(response.data.story.image, user?.first_name || response.data.story.name),
+        name: user?.first_name || response.data.story.name,
+        isOwn: true,
+        storyCount: 1,
+      };
+      setStories([newStory, ...stories.filter(story => !story.isOwn)]);
     } catch (err) {
+      console.error('Story error:', err.response?.data || err.message);
       setError(err.response?.data?.message || 'Failed to add story');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleViewStory = (story) => {
+    setSelectedStory(story);
+  };
+
+  const handleCloseStory = () => {
+    setSelectedStory(null);
   };
 
   const handleLike = async (postId) => {
@@ -242,42 +297,82 @@ const Home = ({ darkMode }) => {
     }
   };
 
+  const currentUserStory = stories.find(story => story.isOwn);
+  console.log('currentUserStory:', currentUserStory || 'undefined');
+  const yourStoryImage = currentUserStory && currentUserStory.image
+    ? getProfilePictureUrl(currentUserStory.image, user?.first_name || currentUserStory.name)
+    : getProfilePictureUrl(user?.profile_picture_url, user?.first_name);
+  console.log('yourStoryImage:', yourStoryImage || 'undefined');
+
   return (
     <div className={`home-main-container ${darkMode ? 'home-dark' : ''}`}>
       {/* Stories Section */}
       <div className="home-stories-container">
         <div className="home-stories">
-          <div className="home-story">
+          {/* Your Story Bubble */}
+          <div className="home-story" onClick={() => currentUserStory && handleViewStory(currentUserStory)}>
             <div className="home-profile-photo home-new-story">
-              <img src={user?.profile_picture_url || generateAvatar(user?.first_name)} alt="Your story" />
-              <div className="home-add-story">
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="home-story-upload"
-                  onChange={handleAddStory}
-                  style={{ display: 'none' }}
-                />
-                <label htmlFor="home-story-upload">+</label>
-              </div>
+              <img 
+                src={yourStoryImage} 
+                alt="Your story" 
+                onError={(e) => {
+                  console.error('Your Story image failed to load:', e);
+                  e.target.src = generateAvatar(user?.first_name || 'Guest');
+                }}
+              />
+              <button 
+                className="home-add-story-btn" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  document.getElementById('home-story-upload').click();
+                }}
+              >
+                <FaCamera />
+              </button>
+              <input
+                type="file"
+                accept="image/*"
+                id="home-story-upload"
+                onChange={handleAddStory}
+                style={{ display: 'none' }}
+              />
             </div>
             <p className="home-name">Your Story</p>
           </div>
-          {stories.filter(story => !story.isOwn).map(story => (
-            <div className="home-story" key={story.id}>
-              <div className="home-profile-photo">
-                <img src={story.image || Profile3} alt={story.name} />
+
+          {/* Other Stories or Placeholders */}
+          {stories.filter(story => !story.isOwn).length > 0 ? (
+            stories.filter(story => !story.isOwn).map(story => (
+              <div className="home-story" key={story.id} onClick={() => handleViewStory(story)}>
+                <div className="home-profile-photo">
+                  <img src={story.image} alt={story.name} />
+                </div>
+                <p className="home-name">{story.name}</p>
               </div>
-              <p className="home-name">{story.name}</p>
-            </div>
-          ))}
+            ))
+          ) : (
+            [...Array(3)].map((_, index) => (
+              <div className="home-story placeholder-story" key={`placeholder-${index}`}>
+                <div className="home-profile-photo">
+                  <div className="home-story-placeholder-inner">
+                    <span>+</span>
+                  </div>
+                </div>
+                <p className="home-name">Follow users</p>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
       {/* Post Creator */}
       <form className="home-post-creator" onSubmit={handlePostSubmit}>
         <div className="home-post-author">
-          <img src={user?.profile_picture_url || generateAvatar(user?.first_name)} alt="Profile" className="home-profile-photo" />
+          <img 
+            src={getProfilePictureUrl(user?.profile_picture_url, user?.first_name)} 
+            alt="Profile" 
+            className="home-profile-photo" 
+          />
           <div className="home-post-input-container">
             <input
               type="text"
@@ -320,9 +415,9 @@ const Home = ({ darkMode }) => {
           <div className="home-feed-card" key={post.post_id}>
             <div className="home-post-header">
               <div className="home-post-user">
-                <img src={post.user_image} alt={post.user} className="home-profile-photo" />
+                <img src={post.user_image} alt={post.user || 'Guest'} className="home-profile-photo" />
                 <div className="home-post-info">
-                  <h3>{post.user}</h3>
+                  <h3>{post.user || 'Guest'}</h3>
                   <small>{post.location}, {post.time}</small>
                 </div>
               </div>
@@ -363,6 +458,16 @@ const Home = ({ darkMode }) => {
           </div>
         ))}
       </div>
+
+      {/* Story Viewer Modal */}
+      {selectedStory && (
+        <div className="home-story-modal" onClick={handleCloseStory}>
+          <div className="home-story-modal-content">
+            <img src={selectedStory.image} alt={selectedStory.name} />
+            <p>{selectedStory.name}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

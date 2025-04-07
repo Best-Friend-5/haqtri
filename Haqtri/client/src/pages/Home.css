@@ -8,6 +8,7 @@
 /* Stories Section */
 .home-stories-container {
   margin-bottom: 2.5rem;
+  padding: 0 10px; /* Prevent hover cutoff */
 }
 
 .home-stories {
@@ -37,6 +38,7 @@
   padding: 3px;
   position: relative;
   margin-bottom: 0.5rem;
+  overflow: hidden; /* Ensure content stays within */
 }
 
 .home-profile-photo img {
@@ -48,27 +50,61 @@
 
 .home-new-story {
   border-color: #D4AF37; /* Metallic Gold for premium */
+  background: rgba(212, 175, 55, 0.1); /* Light gold tint */
+  position: relative;
 }
 
-.home-add-story {
+.home-add-story-btn {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: -10px; /* Positioned below the circle */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
   background: #D4AF37; /* Metallic Gold */
-  color: #2A3F54; /* Deep Navy Blue text for contrast */
-  width: 25px;
-  height: 25px;
+  color: #2A3F54; /* Deep Navy Blue */
   border-radius: 50%;
+  border: 2px solid #ffffff; /* White border for contrast */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.home-add-story-btn:hover {
+  background: #b89b2f; /* Slightly darker gold */
 }
 
 .home-name {
   font-size: 0.9rem;
   color: #2A3F54; /* Deep Navy Blue */
   text-align: center;
+  margin-top: 8px; /* Space for button */
+}
+
+/* Placeholder Stories */
+.home-story.placeholder-story .home-profile-photo {
+  background: #f0f0f0;
+  border-color: transparent;
+}
+
+.home-story-placeholder-inner {
+  width: 100%;
+  height: 100%;
+  background: #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 1.5rem;
+}
+
+.home-main-container.home-dark .home-story-placeholder-inner {
+  background: #2D2D2D;
+  color: #888;
 }
 
 /* Post Creator */
@@ -285,11 +321,6 @@
   border-top: 1px solid #eee;
 }
 
-.home-interaction-buttons {
-  display: flex;
-  gap: 1.5rem;
-}
-
 .home-interaction-btn {
   display: flex;
   align-items: center;
@@ -410,4 +441,129 @@
     width: 60px;
     height: 60px;
   }
+}
+
+/* Story Viewer Modal */
+.home-story-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.home-story-modal-content {
+  position: relative;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+.home-story-modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.home-story-modal-content p {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Add to existing .home-profile-photo */
+.home-profile-photo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #2A3F54;
+  padding: 3px;
+  position: relative;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+/* Story ring with segments */
+.home-profile-photo.has-stories {
+  position: relative;
+}
+
+.home-profile-photo.has-stories::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  border-radius: 50%;
+  background: conic-gradient(
+    #D4AF37 0deg,
+    #D4AF37 calc(360deg / var(--story-count)),
+    transparent calc(360deg / var(--story-count)),
+    transparent 360deg
+  );
+  z-index: -1;
+  transform: rotate(0deg);
+}
+
+/* Adjust segments dynamically */
+.home-profile-photo.has-stories[style*="--story-count: 1"]::before {
+  background: conic-gradient(#D4AF37 0deg 360deg);
+}
+
+.home-profile-photo.has-stories[style*="--story-count: 2"]::before {
+  background: conic-gradient(
+    #D4AF37 0deg 170deg,
+    transparent 170deg 190deg,
+    #D4AF37 190deg 360deg
+  );
+}
+
+.home-profile-photo.has-stories[style*="--story-count: 3"]::before {
+  background: conic-gradient(
+    #D4AF37 0deg 110deg,
+    transparent 110deg 130deg,
+    #D4AF37 130deg 230deg,
+    transparent 230deg 250deg,
+    #D4AF37 250deg 360deg
+  );
+}
+
+.home-profile-photo.has-stories[style*="--story-count: 4"]::before {
+  background: conic-gradient(
+    #D4AF37 0deg 80deg,
+    transparent 80deg 100deg,
+    #D4AF37 100deg 170deg,
+    transparent 170deg 190deg,
+    #D4AF37 190deg 260deg,
+    transparent 260deg 280deg,
+    #D4AF37 280deg 360deg
+  );
+}
+
+/* Add more as needed for higher counts */
+
+.home-profile-photo.has-stories::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #D4AF37 0deg,
+    #D4AF37 calc(360deg / var(--story-count)),
+    transparent calc(360deg / var(--story-count)),
+    transparent 360deg
+  );
+  z-index: -1;
+  padding: 3px;
 }

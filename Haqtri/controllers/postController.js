@@ -1,4 +1,3 @@
-// C:\Users\Abz\Downloads\Haqtri\Haqtri\server\controllers\postController.js
 const { Posts, User, Likes, Comments, Bookmark, Stories } = require('../models');
 const API_BASE_URL = 'http://localhost:5001';
 
@@ -243,7 +242,7 @@ const createStory = async (req, res) => {
     console.log('Request body:', req.body);
     console.log('Uploaded files:', req.files);
 
-    const image = req.files && req.files.image ? `/uploads/${req.files.image[0].filename}` : null;
+    const image = req.file ? `/uploads/${req.file.filename}` : null; // Fixed: Use req.file instead of req.files
     if (!image) {
       return res.status(400).json({ message: 'Image required' });
     }
