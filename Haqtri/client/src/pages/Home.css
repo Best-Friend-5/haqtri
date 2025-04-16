@@ -1,21 +1,21 @@
 .home-main-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 15px; /* Reduced padding */
   background: #ffffff; /* Light mode background */
 }
 
 /* Stories Section */
 .home-stories-container {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem; /* Reduced margin bottom */
   padding: 0 10px; /* Prevent hover cutoff */
 }
 
 .home-stories {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem; /* Reduced gap */
   overflow-x: auto;
-  padding: 1rem 0;
+  padding: 0.5rem 0; /* Reduced padding */
 }
 
 .home-story {
@@ -31,13 +31,13 @@
 }
 
 .home-profile-photo {
-  width: 70px;
-  height: 70px;
+  width: 90px; /* Increased from 70px */
+  height: 90px; /* Increased from 70px */
   border-radius: 50%;
   border: 2px solid #2A3F54; /* Deep Navy Blue */
   padding: 3px;
   position: relative;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem; /* Reduced margin */
   overflow: hidden; /* Ensure content stays within */
 }
 
@@ -56,7 +56,7 @@
 
 .home-add-story-btn {
   position: absolute;
-  bottom: -10px; /* Positioned below the circle */
+  bottom: -5px; /* Adjusted from -10px due to larger bubble */
   left: 50%;
   transform: translateX(-50%);
   width: 30px;
@@ -81,7 +81,7 @@
   font-size: 0.9rem;
   color: #2A3F54; /* Deep Navy Blue */
   text-align: center;
-  margin-top: 8px; /* Space for button */
+  margin-top: 5px; /* Reduced from 8px */
 }
 
 /* Placeholder Stories */
@@ -109,7 +109,7 @@
 
 /* Post Creator */
 .home-post-creator {
-  margin: 2rem 0;
+  margin: 1rem 0; /* Reduced from 2rem */
 }
 
 .home-post-author {
@@ -245,8 +245,8 @@
 
 /* Feed Posts */
 .home-feeds {
-  margin-top: 2rem;
-  gap: 2.5rem;
+  margin-top: 1rem; /* Reduced from 2rem */
+  gap: 1.5rem; /* Reduced from 2.5rem */
 }
 
 .home-feed-card {
@@ -254,7 +254,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   overflow: hidden;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem; /* Reduced from 2rem */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -423,8 +423,8 @@
   }
 
   .home-profile-photo {
-    width: 60px;
-    height: 60px;
+    width: 80px; /* Increased from original 60px */
+    height: 80px; /* Increased from original 60px */
   }
 
   .home-post-input {
@@ -476,18 +476,6 @@
   color: #ffffff;
   font-size: 1.2rem;
   margin-top: 10px;
-}
-
-/* Add to existing .home-profile-photo */
-.home-profile-photo {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 2px solid #2A3F54;
-  padding: 3px;
-  position: relative;
-  margin-bottom: 0.5rem;
-  overflow: hidden;
 }
 
 /* Story ring with segments */

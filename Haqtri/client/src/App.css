@@ -1,4 +1,3 @@
-/* App.css - Update main content positioning */
 .app-container {
   display: flex;
   min-height: 100vh;
@@ -9,28 +8,62 @@
 .main-content {
   flex: 1;
   margin-left: 250px; /* Navbar width */
-  margin-right: 300px; /* Sidebar width */
-  padding: 2rem;
+  margin-right: 0; /* Default: no Sidebar margin */
+  padding: 0; /* Default: no padding */
+  margin-top: 0; /* No top margin */
   transition: all 0.3s ease;
   position: relative;
-  z-index: 1; /* Ensure content stays below fixed elements */
+  z-index: 10; /* Above Navbar (adjust if Navbar z-index is higher) */
 }
 
+/* Home page with Sidebar */
+.main-content.has-sidebar {
+  margin-right: 300px; /* Sidebar width */
+  padding: 2rem; /* Centered content padding */
+}
+
+/* Non-Home pages */
 .content-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none; /* Default: full width */
+}
+
+/* Home page content */
+.content-wrapper.has-sidebar {
+  max-width: 800px; /* Centered content */
+  margin: 0 auto; /* Center horizontally */
+}
+
+/* Marketplace-specific full width */
+.content-wrapper.marketplace-full {
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 1200px) {
   .main-content {
-    margin-left: 80px;
-    margin-right: 0;
+    margin-left: 80px; /* Mobile Navbar width */
+  }
+
+  .main-content.has-sidebar {
+    margin-right: 0; /* No Sidebar on smaller screens */
+    padding: 1rem;
+  }
+
+  .content-wrapper.has-sidebar {
+    max-width: none; /* Full width on smaller screens */
+    margin: 0;
   }
 }
 
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
+    padding: 0;
+  }
+
+  .main-content.has-sidebar {
     padding: 1rem;
   }
 }
