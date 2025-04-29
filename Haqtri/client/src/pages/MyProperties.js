@@ -1,49 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { FaSearch, FaFilter, FaBookmark, FaEnvelope, FaStar, FaCheckCircle, FaMap, FaTh, FaArrowLeft, FaArrowRight, FaHome, FaLandmark, FaTools, FaUserTie } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaBookmark, FaEnvelope, FaStar, FaCheckCircle, FaList, FaTh, FaDownload, FaArchive, FaTag } from 'react-icons/fa';
 import axios from 'axios';
-import './Explore.css';
+import './MyProperties.css';
 
-const Explore = ({ darkMode }) => {
+const MyProperties = ({ darkMode }) => {
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
   const [selectedListing, setSelectedListing] = useState(null);
-  const [activeTab, setActiveTab] = useState('all');
-  const [viewMode, setViewMode] = useState('grid');
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
   const [filters, setFilters] = useState({
     category: 'all',
     subcategory: [],
     priceMin: '',
     priceMax: '',
     location: '',
-    keywords: '',
-    sortBy: 'relevance',
+    sortBy: 'purchaseDate',
     searchQuery: '',
   });
+  const [viewMode, setViewMode] = useState('grid');
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [stats, setStats] = useState({ totalValue: 0, count: 0 });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Category tabs
-  const tabs = [
-    { id: 'all', label: 'All', icon: <FaTh /> },
-    { id: 'Properties', label: 'Properties', icon: <FaHome /> },
-    { id: 'Land', label: 'Land', icon: <FaLandmark /> },
-    { id: 'Materials', label: 'Materials', icon: <FaTools /> },
-    { id: 'Labor', label: 'Labor', icon: <FaUserTie /> },
-  ];
-
-  // Fetch verified listings
+  // Fetch purchased listings
   useEffect(() => {
     const fetchListings = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5001/api/marketplace/verified?page=${page}&limit=12`, {
+        const response = await axios.get(`http://localhost:5001/api/marketplace/purchased?page=${page}&limit=12`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         const newListings = response.data.listings;
         setListings((prev) => (page === 1 ? newListings : [...prev, ...newListings]));
         setHasMore(response.data.hasMore);
+        setStats({
+          totalValue: response.data.totalValue,
+          count: response.data.totalCount,
+        });
         applyFilters(page === 1 ? newListings : [...listings, ...newListings]);
       } catch (err) {
         setError('Failed to load listings. Please try again.');
@@ -56,7 +50,7 @@ const Explore = ({ darkMode }) => {
   // Apply filters and search
   const applyFilters = (data = listings) => {
     let result = [...data];
-    const { category, subcategory, priceMin, priceMax, location, keywords, sortBy, searchQuery } = filters;
+    const { category, subcategory, priceMin, priceMax, location, sortBy, searchQuery } = filters;
 
     if (category !== 'all') {
       result = result.filter((listing) => listing.type === category);
@@ -73,9 +67,6 @@ const Explore = ({ darkMode }) => {
     if (location) {
       result = result.filter((listing) => listing.location.toLowerCase().includes(location.toLowerCase()));
     }
-    if (keywords) {
-      result = result.filter((listing) => listing.keywords.toLowerCase().includes(keywords.toLowerCase()));
-    }
     if (searchQuery) {
       result = result.filter(
         (listing) =>
@@ -86,8 +77,9 @@ const Explore = ({ darkMode }) => {
     if (sortBy) {
       result.sort((a, b) => {
         if (sortBy === 'price') return a.price - b.price;
-        if (sortBy === 'date') return new Date(b.createdAt) - new Date(a.createdAt);
-        return 0; // Relevance (default, no change)
+        if (sortBy === 'purchaseDate') return new Date(b.createdAt) - new Date(a.createdAt);
+        if (sortBy === 'title') return a.title.localeCompare(b.title);
+        return 0;
       });
     }
     setFilteredListings(result);
@@ -116,22 +108,6 @@ const Explore = ({ darkMode }) => {
     applyFilters();
   };
 
-  // Handle tab change
-  const handleTabChange = (tabId) => {
-    setActiveTab(tabId);
-    setFilters((prev) => ({ ...prev, category: tabId === 'all' ? 'all' : tabId }));
-    applyFilters();
-  };
-
-  // Scroll tabs
-  const scrollTabs = (direction) => {
-    const tabsContainer = document.querySelector('.mp-marketplace-tabs');
-    if (tabsContainer) {
-      const scrollAmount = direction === 'left' ? -100 : 100;
-      tabsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
-
   // Toggle bookmark
   const handleToggleBookmark = async (id) => {
     try {
@@ -147,21 +123,7 @@ const Explore = ({ darkMode }) => {
       );
       applyFilters();
     } catch (err) {
-      setError('Failed to update bookmark. Please log in.');
-    }
-  };
-
-  // Purchase listing
-  const handlePurchase = async (id) => {
-    try {
-      await axios.post(
-        `http://localhost:5001/api/marketplace/purchase/${id}`,
-        {},
-        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
-      );
-      alert('Purchase initiated. Check your email for details.');
-    } catch (err) {
-      setError('Failed to initiate purchase. Please log in or verify your account.');
+      setError('Failed to update bookmark.');
     }
   };
 
@@ -175,21 +137,58 @@ const Explore = ({ darkMode }) => {
       );
       alert('Message sent to seller.');
     } catch (err) {
-      setError('Failed to send message. Please log in.');
+      setError('Failed to send message.');
     }
   };
 
-  // Report listing
-  const handleReport = async (id) => {
+  // Export inventory
+  const handleExport = async () => {
     try {
-      await axios.post(
-        'http://localhost:5001/api/reports',
-        { listingId: id, reason: 'User-reported issue' },
-        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
-      );
-      alert('Listing reported. Thank you for your feedback.');
+      const response = await axios.get('http://localhost:5001/api/marketplace/export', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        responseType: 'blob',
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'inventory.csv');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     } catch (err) {
-      setError('Failed to report listing. Please log in.');
+      setError('Failed to export inventory.');
+    }
+  };
+
+  // Manage listing (resale, archive, support)
+  const handleManageListing = async (id, action) => {
+    try {
+      if (action === 'resale') {
+        await axios.post(
+          'http://localhost:5001/api/marketplace/submit',
+          { id, status: 'pending' },
+          { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+        );
+        alert('Listing marked for resale.');
+      } else if (action === 'archive') {
+        await axios.post(
+          'http://localhost:5001/api/marketplace/archive',
+          { id },
+          { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+        );
+        setListings((prev) => prev.filter((listing) => listing.id !== id));
+        applyFilters();
+        alert('Listing archived.');
+      } else if (action === 'support') {
+        await axios.post(
+          'http://localhost:5001/api/support',
+          { listingId: id, issue: 'Support request' },
+          { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+        );
+        alert('Support request submitted.');
+      }
+    } catch (err) {
+      setError(`Failed to ${action} listing.`);
     }
   };
 
@@ -199,16 +198,16 @@ const Explore = ({ darkMode }) => {
   };
 
   return (
-    <div className={`mp-explore ${darkMode ? 'dark' : ''}`}>
+    <div className={`mp-my-properties ${darkMode ? 'dark' : ''}`}>
       <div className="mp-marketplace-header">
         <div className="mp-marketplace-search">
           <FaSearch className="mp-search-icon" />
           <input
             type="text"
-            placeholder="Search listings..."
+            placeholder="Search your properties..."
             value={filters.searchQuery}
             onChange={handleSearch}
-            aria-label="Search listings"
+            aria-label="Search purchased listings"
           />
         </div>
         <button className="mp-filter-icon" onClick={() => document.querySelector('.mp-marketplace-filters').classList.toggle('expanded')}>
@@ -216,30 +215,8 @@ const Explore = ({ darkMode }) => {
         </button>
       </div>
 
-      <div className="mp-marketplace-tabs">
-        <button className="mp-tab-arrow mp-tab-arrow-left" onClick={() => scrollTabs('left')}>
-          <FaArrowLeft />
-        </button>
-        <div className="mp-tabs-container">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              className={`mp-tab ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => handleTabChange(tab.id)}
-              aria-label={`View ${tab.label} listings`}
-            >
-              {tab.icon}
-              {tab.label}
-            </button>
-          ))}
-        </div>
-        <button className="mp-tab-arrow mp-tab-arrow-right" onClick={() => scrollTabs('right')}>
-          <FaArrowRight />
-        </button>
-      </div>
-
       <div className="mp-marketplace-filters">
-        <h3>Filter Listings</h3>
+        <h3>Filter Properties</h3>
         <div className="mp-filter-group">
           <label>Category</label>
           <select name="category" value={filters.category} onChange={handleFilterChange}>
@@ -296,26 +273,23 @@ const Explore = ({ darkMode }) => {
           />
         </div>
         <div className="mp-filter-group">
-          <label>Keywords</label>
-          <input
-            type="text"
-            name="keywords"
-            placeholder="e.g., Eco Certified"
-            value={filters.keywords}
-            onChange={handleFilterChange}
-          />
-        </div>
-        <div className="mp-filter-group">
           <label>Sort By</label>
           <select name="sortBy" value={filters.sortBy} onChange={handleFilterChange}>
-            <option value="relevance">Relevance</option>
-            <option value="price">Price: Low to High</option>
-            <option value="date">Date Posted</option>
+            <option value="purchaseDate">Purchase Date</option>
+            <option value="price">Price</option>
+            <option value="title">Title</option>
           </select>
         </div>
       </div>
 
       <div className="mp-marketplace-content">
+        <div className="mp-stats">
+          <h2>My Properties</h2>
+          <p>Total Assets: {stats.count} | Total Value: AED {stats.totalValue.toLocaleString()}</p>
+          <button className="mp-btn-secondary" onClick={handleExport}>
+            <FaDownload /> Export Inventory
+          </button>
+        </div>
         <div className="mp-view-toggle">
           <button
             className={`mp-view-btn ${viewMode === 'grid' ? 'active' : ''}`}
@@ -325,77 +299,100 @@ const Explore = ({ darkMode }) => {
             <FaTh />
           </button>
           <button
-            className={`mp-view-btn ${viewMode === 'map' ? 'active' : ''}`}
-            onClick={() => setViewMode('map')}
-            aria-label="Map view"
+            className={`mp-view-btn ${viewMode === 'list' ? 'active' : ''}`}
+            onClick={() => setViewMode('list')}
+            aria-label="List view"
           >
-            <FaMap />
+            <FaList />
           </button>
         </div>
         {error && <p className="mp-marketplace-error">{error}</p>}
-        {viewMode === 'grid' ? (
-          <>
-            {loading && (
-              <div className="mp-loading-skeleton">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="mp-skeleton-card" />
-                ))}
-              </div>
-            )}
-            <div className="mp-listing-grid">
-              {filteredListings.length > 0 ? (
-                filteredListings.map((listing) => (
-                  <div
-                    key={listing.id}
-                    className="mp-marketplace-card"
-                    onClick={() => setSelectedListing(listing)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => e.key === 'Enter' && setSelectedListing(listing)}
+        {loading && (
+          <div className="mp-loading-skeleton">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="mp-skeleton-card" />
+            ))}
+          </div>
+        )}
+        <div className={`mp-listing-${viewMode}`}>
+          {filteredListings.length > 0 ? (
+            filteredListings.map((listing) => (
+              <div
+                key={listing.id}
+                className={`mp-marketplace-card ${viewMode}`}
+                onClick={() => setSelectedListing(listing)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && setSelectedListing(listing)}
+              >
+                <div className="mp-marketplace-card-images">
+                  <img
+                    src={listing.images?.[0] || '/images/placeholder.jpg'}
+                    alt={listing.title}
+                    onError={(e) => (e.target.src = '/images/placeholder.jpg')}
+                  />
+                  {listing.verified && <span className="mp-badge"><FaCheckCircle /> Verified</span>}
+                  <button
+                    className="mp-card-save"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleToggleBookmark(listing.id);
+                    }}
+                    aria-label={listing.isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
                   >
-                    <div className="mp-marketplace-card-images">
-                      <img
-                        src={listing.images?.[0] || '/images/placeholder.jpg'}
-                        alt={listing.title}
-                        onError={(e) => (e.target.src = '/images/placeholder.jpg')}
-                      />
-                      {listing.verified && <span className="mp-badge"><FaCheckCircle /> Verified</span>}
+                    <FaBookmark className={listing.isBookmarked ? 'active' : ''} />
+                  </button>
+                </div>
+                <div className="mp-marketplace-card-details">
+                  <h3>{listing.title}</h3>
+                  <p className="mp-card-location">{listing.location}</p>
+                  <p className="mp-card-price">AED {listing.price.toLocaleString()}</p>
+                  <p className="mp-card-specs">{listing.details?.specs || 'No specs'}</p>
+                  <div className="mp-card-rating">
+                    <FaStar /> {listing.rating || 'N/A'}
+                  </div>
+                  {viewMode === 'list' && (
+                    <div className="mp-card-actions">
                       <button
-                        className="mp-card-save"
+                        className="mp-btn-secondary"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleToggleBookmark(listing.id);
+                          handleManageListing(listing.id, 'resale');
                         }}
-                        aria-label={listing.isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
                       >
-                        <FaBookmark className={listing.isBookmarked ? 'active' : ''} />
+                        <FaTag /> Mark for Resale
+                      </button>
+                      <button
+                        className="mp-btn-secondary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleManageListing(listing.id, 'archive');
+                        }}
+                      >
+                        <FaArchive /> Archive
+                      </button>
+                      <button
+                        className="mp-btn-secondary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleManageListing(listing.id, 'support');
+                        }}
+                      >
+                        <FaEnvelope /> Request Support
                       </button>
                     </div>
-                    <div className="mp-marketplace-card-details">
-                      <h3>{listing.title}</h3>
-                      <p className="mp-card-location">{listing.location}</p>
-                      <p className="mp-card-price">AED {listing.price.toLocaleString()}</p>
-                      <p className="mp-card-specs">{listing.details?.specs || 'No specs'}</p>
-                      <div className="mp-card-rating">
-                        <FaStar /> {listing.rating || 'N/A'}
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="mp-no-results">No listings found.</p>
-              )}
-            </div>
-            {hasMore && !loading && (
-              <button className="mp-load-more" onClick={handleLoadMore}>
-                Load More
-              </button>
-            )}
-          </>
-        ) : (
-          <div className="mp-map-placeholder">
-            <p>Map View Coming Soon</p>
-          </div>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="mp-no-results">No properties found.</p>
+          )}
+        </div>
+        {hasMore && !loading && (
+          <button className="mp-load-more" onClick={handleLoadMore}>
+            Load More
+          </button>
         )}
       </div>
 
@@ -407,7 +404,7 @@ const Explore = ({ darkMode }) => {
               onClick={() => setSelectedListing(null)}
               aria-label="Close modal"
             >
-              ×
+              &times;
             </button>
             <div className="mp-media-gallery">
               <div className="mp-gallery-slider">
@@ -437,15 +434,21 @@ const Explore = ({ darkMode }) => {
               <div className="mp-modal-actions">
                 <button
                   className="mp-btn-primary"
-                  onClick={() => handlePurchase(selectedListing.id)}
+                  onClick={() => handleManageListing(selectedListing.id, 'resale')}
                 >
-                  Buy Now
+                  Mark for Resale
                 </button>
                 <button
                   className="mp-btn-secondary"
-                  onClick={() => handleReport(selectedListing.id)}
+                  onClick={() => handleManageListing(selectedListing.id, 'archive')}
                 >
-                  Report
+                  Archive
+                </button>
+                <button
+                  className="mp-btn-secondary"
+                  onClick={() => handleManageListing(selectedListing.id, 'support')}
+                >
+                  Request Support
                 </button>
               </div>
               <p className="mp-trust-features">All transactions are secured via escrow.</p>
@@ -457,4 +460,4 @@ const Explore = ({ darkMode }) => {
   );
 };
 
-export default Explore;
+export default MyProperties;

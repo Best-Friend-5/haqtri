@@ -9,7 +9,7 @@ import Notifications from './pages/Notifications';
 import Messages from './pages/Messages';
 import Live from './pages/Live';
 import Analytics from './pages/Analytics';
-import Property from './pages/Property';
+import Property from './pages/MyProperties';
 import Settings from './pages/Settings';
 import Marketplace from './pages/Marketplace';
 import Profile from './pages/Profile';
