@@ -11,7 +11,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
     { icon: <FaUser />, label: 'Profile', path: '/profile' }, // Added Profile
     { icon: <FaHotel />, label: 'Property', path: '/property' },
     { icon: <FaShoppingCart />, label: 'Marketplace', path: '/marketplace' }, // Replaced Bookmark
-    { icon: <FaVideo />, label: 'Explore', path: '/explore' },
+    // { icon: <FaVideo />, label: 'Explore', path: '/explore' },
     { icon: <FaTv />, label: 'Live', path: '/live' },
     { icon: <FaCommentDots />, label: 'Messages', path: '/messages' },
     { icon: <FaBell />, label: 'Notifications', path: '/notifications' },

@@ -1,313 +1,378 @@
-.property-container {
-    max-width: 1200px; /* Wider than Home.js for dual-column layout */
-    margin: 0 auto;
-    padding: 20px;
-    background: #ffffff; /* Light mode background */
+.mp-properties {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.mp-properties.dark {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.mp-properties h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.mp-properties-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mp-properties-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.mp-properties.dark .mp-properties-search {
+  background: #333;
+  border-color: #555;
+}
+
+.mp-search-icon {
+  margin-right: 8px;
+  color: #7f8c8d;
+}
+
+.mp-properties-search input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.mp-properties.dark .mp-properties-search input {
+  background: #333;
+  color: #fff;
+}
+
+.mp-filter-icon {
+  background: #ecf0f1;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mp-properties.dark .mp-filter-icon {
+  background: #444;
+  color: #fff;
+}
+
+.mp-filter-icon:hover {
+  background: #bdc3c7;
+}
+
+.mp-properties.dark .mp-filter-icon:hover {
+  background: #555;
+}
+
+.mp-btn-primary {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.mp-btn-primary:hover {
+  background: #2980b9;
+}
+
+.mp-properties-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mp-tab {
+  background: #ecf0f1;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.mp-properties.dark .mp-tab {
+  background: #444;
+  color: #fff;
+}
+
+.mp-tab.active {
+  background: #3498db;
+  color: #fff;
+}
+
+.mp-tab:hover {
+  background: #bdc3c7;
+}
+
+.mp-properties.dark .mp-tab:hover {
+  background: #555;
+}
+
+.mp-properties-filters {
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.mp-properties.dark .mp-properties-filters {
+  background: #2c2c2c;
+}
+
+.mp-properties-filters.expanded {
+  display: block;
+}
+
+.mp-properties-filters h3 {
+  margin-bottom: 10px;
+}
+
+.mp-filter-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.mp-filter-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.mp-filter-group select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.mp-properties.dark .mp-filter-group select {
+  background: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+.mp-create-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.mp-modal-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+}
+
+.mp-properties.dark .mp-modal-content {
+  background: #2c2c2c;
+}
+
+.mp-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.mp-properties.dark .mp-modal-close {
+  color: #fff;
+}
+
+.mp-modal-content h3 {
+  margin-bottom: 20px;
+}
+
+.mp-form-group {
+  margin-bottom: 15px;
+}
+
+.mp-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.mp-form-group input,
+.mp-form-group select,
+.mp-form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.mp-properties.dark .mp-form-group input,
+.mp-properties.dark .mp-form-group select,
+.mp-properties.dark .mp-form-group textarea {
+  background: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+.mp-form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.mp-properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.mp-listing-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.mp-properties.dark .mp-listing-card {
+  background: #2c2c2c;
+}
+
+.mp-listing-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mp-listing-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.mp-listing-details {
+  padding: 15px;
+}
+
+.mp-listing-details h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+}
+
+.mp-listing-price {
+  color: #2ecc71;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.mp-listing-location,
+.mp-listing-category,
+.mp-listing-user,
+.mp-listing-status,
+.mp-listing-date {
+  color: #7f8c8d;
+  margin-bottom: 5px;
+}
+
+.mp-listing-status {
+  font-weight: bold;
+}
+
+.mp-listing-status.Pending {
+  color: #f1c40f;
+}
+
+.mp-listing-status.Completed {
+  color: #2ecc71;
+}
+
+.mp-listing-status.Cancelled {
+  color: #e74c3c;
+}
+
+.mp-listing-description {
+  font-size: 0.9rem;
+  color: #34495e;
+  margin-bottom: 10px;
+}
+
+.mp-properties.dark .mp-listing-description {
+  color: #bdc3c7;
+}
+
+.mp-properties-error {
+  color: #e74c3c;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.mp-loading {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.mp-spinner {
+  font-size: 2rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .mp-properties-header {
+    flex-direction: column;
+    align-items: stretch;
   }
-  
-  .property-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 24px;
-    color: #2A3F54; /* Deep Navy Blue */
-    margin-bottom: 20px;
+
+  .mp-properties-search {
+    margin-bottom: 10px;
   }
-  
-  .hotel-icon {
-    color: #4A8B6F; /* Earthy Green */
+
+  .mp-properties-tabs {
+    flex-direction: column;
   }
-  
-  .property-layout {
-    display: flex;
-    gap: 20px;
-    height: calc(100vh - 100px); /* Adjust for title and padding */
+
+  .mp-properties-grid {
+    grid-template-columns: 1fr;
   }
-  
-  /* Property List */
-  .property-list {
-    width: 400px;
-    overflow-y: auto;
-    border-right: 1px solid #eee;
+
+  .mp-listing-image img {
+    height: 150px;
   }
-  
-  .property-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .property-item:hover {
-    background: #f9e9e4; /* Light Terracotta tint */
-  }
-  
-  .property-item.active {
-    background: #CC7357; /* Warm Terracotta */
-    color: #ffffff;
-  }
-  
-  .property-image {
-    width: 70px;
-    height: 70px;
-    border-radius: 8px;
-    margin-right: 1rem;
-    object-fit: cover;
-  }
-  
-  .property-info {
-    flex: 1;
-  }
-  
-  .property-info h3 {
-    font-size: 1rem;
-    margin: 0 0 5px;
-    color: #2A3F54; /* Deep Navy Blue */
-  }
-  
-  .property-location {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 0 0 3px;
-  }
-  
-  .property-price {
-    font-size: 0.9rem;
-    color: #CC7357; /* Warm Terracotta */
-    margin: 0 0 3px;
-  }
-  
-  .property-rating {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.9rem;
-    color: #D4AF37; /* Metallic Gold */
-  }
-  
-  .star-icon {
-    color: #D4AF37; /* Metallic Gold */
-  }
-  
-  .bookmark-btn {
-    background: none;
-    border: none;
-    color: #666;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-  }
-  
-  .bookmark-btn.active {
-    color: #D4AF37; /* Metallic Gold */
-  }
-  
-  .bookmark-btn:hover {
-    color: #CC7357; /* Warm Terracotta */
-  }
-  
-  /* Property Details */
-  .property-details {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .details-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    text-align: center;
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  .details-image {
-    width: 100%;
-    max-height: 200px;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    object-fit: cover;
-  }
-  
-  .details-card h3 {
-    font-size: 1.5rem;
-    color: #2A3F54; /* Deep Navy Blue */
-    margin: 0 0 0.5rem;
-  }
-  
-  .details-location {
-    font-size: 1rem;
-    color: #666;
-    margin: 0 0 0.5rem;
-  }
-  
-  .details-price {
-    font-size: 1rem;
-    color: #CC7357; /* Warm Terracotta */
-    margin: 0 0 0.5rem;
-  }
-  
-  .details-rating {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    font-size: 1rem;
-    color: #D4AF37; /* Metropolitan Gold */
-    margin-bottom: 1rem;
-  }
-  
-  .details-description {
-    font-size: 1rem;
-    color: #666;
-    margin: 0 0 1rem;
-  }
-  
-  .owner-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: center;
-  }
-  
-  .profile-photo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid #2A3F54; /* Deep Navy Blue */
-    padding: 3px;
-  }
-  
-  .profile-photo img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .owner-name {
-    font-size: 1rem;
-    color: #2A3F54; /* Deep Navy Blue */
-    margin: 0 0 0.5rem;
-  }
-  
-  .contact-btn {
-    background: #2A3F54; /* Deep Navy Blue */
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: background 0.3s ease;
-  }
-  
-  .contact-btn:hover {
-    background: #1f2e3f; /* Darker Navy */
-  }
-  
-  .no-selection {
-    font-size: 16px;
-    color: #666;
-    text-align: center;
-  }
-  
-  /* Dark Mode */
-  .property-container.dark {
-    background: #1A2530; /* Darker Navy */
-  }
-  
-  .property-container.dark .property-title {
-    color: #fff;
-  }
-  
-  .property-container.dark .property-item {
-    background: #2D2D2D;
-  }
-  
-  .property-container.dark .property-item:hover {
-    background: #CC7357; /* Warm Terracotta */
-  }
-  
-  .property-container.dark .property-item.active {
-    background: #CC7357; /* Warm Terracotta */
-  }
-  
-  .property-container.dark .property-info h3 {
-    color: #fff;
-  }
-  
-  .property-container.dark .property-location,
-  .property-container.dark .property-price {
-    color: #b0b0b0; /* Light grey */
-  }
-  
-  .property-container.dark .bookmark-btn {
-    color: #b0b0b0; /* Light grey */
-  }
-  
-  .property-container.dark .bookmark-btn.active {
-    color: #D4AF37; /* Metallic Gold */
-  }
-  
-  .property-container.dark .bookmark-btn:hover {
-    color: #CC7357; /* Warm Terracotta */
-  }
-  
-  .property-container.dark .details-card {
-    background: #2D2D2D;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .property-container.dark .details-card h3,
-  .property-container.dark .owner-name {
-    color: #fff;
-  }
-  
-  .property-container.dark .details-location,
-  .property-container.dark .details-description {
-    color: #b0b0b0; /* Light grey */
-  }
-  
-  .property-container.dark .no-selection {
-    color: #b0b0b0; /* Light grey */
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .property-container {
-      padding: 10px;
-    }
-  
-    .property-layout {
-      flex-direction: column;
-    }
-  
-    .property-list {
-      width: 100%;
-      border-right: none;
-      border-bottom: 1px solid #eee;
-      max-height: 40vh;
-    }
-  
-    .property-image {
-      width: 60px;
-      height: 60px;
-    }
-  
-    .profile-photo {
-      width: 40px;
-      height: 40px;
-    }
-  
-    .details-image {
-      max-height: 150px;
-    }
-  }
+}
